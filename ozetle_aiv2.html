@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özetle.ai - Yapay Zeka Yorum Analizi</title>
+    
+    <!-- WhatsApp & Sosyal Medya Paylaşımı İçin Open Graph Meta Etiketleri -->
+    <meta property="og:title" content="Özetle.ai - Yapay Zeka Yorum Analizi">
+    <meta property="og:description" content="İşletme yorumlarını yapay zeka ile saniyeler içinde özetleyin ve aksiyon planı çıkarın.">
+    <meta property="og:image" content="Özetle.ai Mavi Sohbet Logosu.png">
+    <meta property="og:type" content="website">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Config for Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Yükleme animasyonu için özel CSS */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Sonuçların yumuşak bir şekilde belirmesi için */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation -->
+    <nav class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 cursor-pointer">
+                    <img src="Özetle.ai Mavi Sohbet Logosu.png" alt="Özetle.ai Logo" class="h-10 md:h-12 w-auto object-contain">
+                </div>
+                
+                <!-- Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" id="nav-anasayfa" class="text-slate-600 hover:text-primary-600 font-medium transition-colors">Ana Sayfa</a>
+                    <a href="#ozellikler" id="nav-ozellikler" class="text-slate-600 hover:text-primary-600 font-medium transition-colors">Özellikler</a>
+                    <a href="#" id="nav-iletisim" class="text-slate-600 hover:text-primary-600 font-medium transition-colors">İletişim</a>
+                </div>
+
+                <!-- API Key / Login placeholder -->
+                <div class="hidden md:flex">
+                    <button id="nav-giris" class="bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2 rounded-full font-medium transition-colors text-sm">
+                        Giriş Yap
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-start pt-16 px-4 pb-24 relative overflow-hidden">
+        
+        <!-- Background decorative elements -->
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 z-0"></div>
+        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 z-0"></div>
+
+        <!-- Hero Section -->
+        <div id="hero-section" class="w-full max-w-4xl text-center z-10 transition-all duration-500">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-primary-50 text-primary-700 text-sm font-semibold border border-primary-100">
+                <i class="fa-solid fa-robot mr-2"></i> Yapay Zeka Destekli Yorum Analizi
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
+                Google Yorumlarını <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-600">Saniyeler İçinde Özetleyin</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
+                İşletme adını veya haritalar linkini girin, yapay zeka sizin için en önemli noktaları çıkarsın ve aksiyon planı oluştursun.
+            </p>
+
+            <!-- Search Input Container -->
+            <div class="w-full max-w-3xl mx-auto bg-white p-2 rounded-full shadow-xl shadow-primary-500/10 border border-slate-200 flex flex-col sm:flex-row items-center gap-2">
+                <div class="flex-grow flex items-center w-full px-4 py-3">
+                    <i class="fa-solid fa-map-location-dot text-slate-400 text-lg mr-3"></i>
+                    <input type="text" id="business-input" placeholder="İşletme adı veya Google Haritalar linki girin..." 
+                        class="w-full bg-transparent border-none outline-none text-slate-700 text-lg placeholder-slate-400"
+                        value="">
+                </div>
+                <button id="ozetle-btn" class="w-full sm:w-auto bg-gradient-to-r from-primary-600 to-blue-700 hover:from-primary-700 hover:to-blue-800 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 transform active:scale-95 shadow-md whitespace-nowrap">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Analiz Et
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading State (Hidden by default) -->
+        <div id="loader-container" class="hidden z-10 mt-16 flex flex-col items-center fade-in">
+            <div class="loader mb-6"></div>
+            <div class="bg-white px-8 py-4 rounded-full shadow-md border border-slate-100 flex items-center gap-4">
+                <i class="fa-solid fa-circle-notch fa-spin text-primary-600 text-xl"></i>
+                <p id="loading-text" class="text-slate-700 font-semibold min-w-[280px] text-center transition-opacity duration-300">Yorumlar çekiliyor...</p>
+            </div>
+        </div>
+
+        <!-- Results Section (Hidden by default) -->
+        <div id="results-container" class="hidden w-full max-w-5xl z-10 mt-8 fade-in">
+            
+            <!-- Business Info Card & Metrics -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8 mb-8 grid grid-cols-1 sm:grid-cols-3 gap-6 items-center">
+                <div class="flex items-center gap-5 sm:col-span-1 border-b sm:border-b-0 sm:border-r border-slate-100 pb-6 sm:pb-0 pr-0 sm:pr-6">
+                    <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center text-3xl text-primary-600 shrink-0">
+                        <i class="fa-solid fa-shop"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 mb-1 leading-tight">Örnek Kasap & Şarküteri</h2>
+                        <p class="text-slate-500 text-sm"><i class="fa-solid fa-location-dot mr-1"></i> Muratpaşa, Antalya</p>
+                    </div>
+                </div>
+                
+                <div class="sm:col-span-2 grid grid-cols-2 gap-4">
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex flex-col items-center justify-center">
+                        <span class="text-slate-500 text-sm font-medium mb-1">Analiz Edilen Yorum</span>
+                        <span class="text-3xl font-extrabold text-slate-900">247</span>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex flex-col items-center justify-center">
+                        <span class="text-slate-500 text-sm font-medium mb-1">Google Puanı</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-3xl font-extrabold text-slate-900">4.4</span>
+                            <span class="text-yellow-400 text-xl"><i class="fa-solid fa-star"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Grid (Top 3 Pros & Cons) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                
+                <!-- Top 3 Pros -->
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
+                    <h3 class="font-bold text-slate-800 text-xl mb-6 flex items-center gap-2">
+                        <div class="bg-green-100 p-2 rounded text-green-600"><i class="fa-solid fa-thumbs-up"></i></div>
+                        En Çok Beğenilen 3 Şey
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Pro 1 -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-2 font-medium">
+                                <span class="text-slate-800 font-semibold">1. Taze ve lezzetli et</span>
+                                <span class="text-slate-500">141 Bahsetme</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-3">
+                                <div class="bg-green-500 h-3 rounded-full" style="width: 85%"></div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">"Kuzunun lokum gibi yumuşak olması", "Başka yerlerde bulamadığım tat"</p>
+                        </div>
+                        
+                        <!-- Pro 2 -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-2 font-medium">
+                                <span class="text-slate-800 font-semibold">2. Güler yüzlü, ilgili hizmet</span>
+                                <span class="text-slate-500">98 Bahsetme</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-3">
+                                <div class="bg-green-500 h-3 rounded-full opacity-80" style="width: 60%"></div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">"Hangi etin hangi yemeğe uygun olduğunu anlatmaları", "Çay ikramı"</p>
+                        </div>
+
+                        <!-- Pro 3 -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-2 font-medium">
+                                <span class="text-slate-800 font-semibold">3. Temizlik ve hijyen</span>
+                                <span class="text-slate-500">57 Bahsetme</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-3">
+                                <div class="bg-green-500 h-3 rounded-full opacity-60" style="width: 35%"></div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">"İçeri girince çiğ et kokusu olmaması", "Pırıl pırıl vitrin"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 3 Cons -->
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sm:p-8">
+                    <h3 class="font-bold text-slate-800 text-xl mb-6 flex items-center gap-2">
+                        <div class="bg-red-100 p-2 rounded text-red-600"><i class="fa-solid fa-thumbs-down"></i></div>
+                        Öne Çıkan Şikayetler
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Con 1 -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-2 font-medium">
+                                <span class="text-slate-800 font-semibold">1. Yüksek Fiyatlar</span>
+                                <span class="text-slate-500">32 Bahsetme</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-3">
+                                <div class="bg-red-500 h-3 rounded-full" style="width: 45%"></div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">"Çevredeki kasaplara göre fiyatlar çok daha yüksek", "Pahalı"</p>
+                        </div>
+                        
+                        <!-- Con 2 -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-2 font-medium">
+                                <span class="text-slate-800 font-semibold">2. Yoğun saatlerde sıra bekleme</span>
+                                <span class="text-slate-500">18 Bahsetme</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-3">
+                                <div class="bg-red-500 h-3 rounded-full opacity-80" style="width: 25%"></div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">"Hafta sonu kasa sırası çok uzuyor", "Personel yetersiz kalıyor"</p>
+                        </div>
+
+                        <!-- Con 3 -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-2 font-medium">
+                                <span class="text-slate-800 font-semibold">3. Otopark sorunu</span>
+                                <span class="text-slate-500">12 Bahsetme</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-3">
+                                <div class="bg-red-500 h-3 rounded-full opacity-60" style="width: 15%"></div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">"Dükkan önüne park etmek imkansız", "Trafik oluyor"</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- AI Insight & Solution -->
+            <div class="bg-gradient-to-br from-primary-600 to-indigo-700 rounded-2xl shadow-xl overflow-hidden text-white mb-8">
+                <div class="bg-black/10 px-6 py-4 border-b border-white/10 flex items-center gap-3">
+                    <i class="fa-solid fa-wand-magic-sparkles text-yellow-300"></i>
+                    <h3 class="font-bold text-lg">Yapay Zeka Çıkarımı ve Çözüm Önerisi</h3>
+                </div>
+                <div class="p-6 sm:p-8">
+                    <p class="text-blue-50 text-lg leading-relaxed mb-6 font-medium">
+                        <span class="text-white font-bold">Çıkarım:</span> Müşteri "et" satın almıyor, güveni satın alıyor. Taze et + güler yüz + temizlik bir üçlü olarak birlikte anılıyor.
+                    </p>
+                    
+                    <div class="bg-white/10 rounded-xl p-5 backdrop-blur-sm border border-white/20">
+                        <h4 class="font-semibold mb-4 flex items-center gap-2 text-yellow-300 text-lg">
+                            <i class="fa-solid fa-lightbulb"></i> Aksiyon Planı
+                        </h4>
+                        <ul class="space-y-4 text-blue-50 text-sm sm:text-base">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle mt-1 text-white/70"></i>
+                                <span>Yüksek fiyat algısını kırmak için cam vitrinde haftanın belirli günleri "indirimli sepet/paket" kampanyaları vurgulanabilir.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle mt-1 text-white/70"></i>
+                                <span>Hafta sonu yoğunluğunu yönetmek için kasa harici sadece sipariş alan 1 mobil personel eklenebilir.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle mt-1 text-white/70"></i>
+                                <span>Google profilinize yakındaki ücretli/ücretsiz otopark alanlarını gösteren bir açıklama veya fotoğraf ekleyin.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Özellikler Bölümü (Nasıl Çalışır?) -->
+        <div id="ozellikler" class="w-full max-w-7xl mt-24 pt-12 border-t border-slate-200">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Ürün nasıl çalışıyor?</h2>
+                <p class="text-lg text-slate-600">Yorumdan karar çıkarana kadar beş adım</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <!-- Adım 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 flex flex-col items-start hover:shadow-lg transition-shadow">
+                    <div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xl mb-4">1</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Yorumları çek</h3>
+                    <p class="text-sm text-slate-500">İşletme ve rakiplerin Google yorumları, puanı, tarihi ve konumu toplanır.</p>
+                </div>
+                <!-- Adım 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 flex flex-col items-start hover:shadow-lg transition-shadow">
+                    <div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xl mb-4">2</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Temizle ve grupla</h3>
+                    <p class="text-sm text-slate-500">Dil tespiti, tekrar eden ve alakasız (ör. restoran) kayıtların ayıklanması.</p>
+                </div>
+                <!-- Adım 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 flex flex-col items-start hover:shadow-lg transition-shadow">
+                    <div class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-xl mb-4">3</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Yapay zekâ ile etiketle</h3>
+                    <p class="text-sm text-slate-500">Her yorumdan konu (hizmet, kalite, fiyat...) ve duygu (olumlu/olumsuz) çıkarılır.</p>
+                </div>
+                <!-- Adım 4 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 flex flex-col items-start hover:shadow-lg transition-shadow">
+                    <div class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-xl mb-4">4</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Top 3 beğeni, top 3 şikâyet</h3>
+                    <p class="text-sm text-slate-500">Konular sayılır, işletme ve bölge bazında sıralanır.</p>
+                </div>
+                <!-- Adım 5 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-100 flex flex-col items-start hover:shadow-lg transition-shadow">
+                    <div class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-xl mb-4">5</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Çözüm önerisi üret</h3>
+                    <p class="text-sm text-slate-500">Her şikâyet için kök neden, eylem listesi ve takip göstergesi önerilir.</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-amber-50 rounded-xl p-6 border border-amber-100 text-amber-900 text-sm">
+                <p><span class="font-bold">Kapsam Notu:</span> Bu prototipte adım 1-2 Google Places üzerinden yapıldı (50 işletme, 247 yorum). Adım 3-5 yapay zekâ ile gerçekleştirildi. Sayılar ve öneriler ürünün örnek çıktısıdır; istatistiksel kesinlik iddiası taşımaz.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Giriş Yap Modal -->
+    <div id="login-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-slate-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative transform scale-95 transition-transform duration-300">
+            <button id="close-login" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-slate-900 mb-2">Hoş Geldiniz</h3>
+                <p class="text-slate-500 text-sm">Özetle.ai hesabınıza giriş yapın.</p>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">E-posta</label>
+                    <input type="email" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow" placeholder="ornek@sirket.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Şifre</label>
+                    <input type="password" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow" placeholder="••••••••">
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <label class="flex items-center text-slate-600">
+                        <input type="checkbox" class="mr-2 rounded text-primary-600 focus:ring-primary-500 border-slate-300"> Beni Hatırla
+                    </label>
+                    <a href="#" class="text-primary-600 hover:text-primary-700 font-medium">Şifremi Unuttum</a>
+                </div>
+                <button type="button" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors mt-2">
+                    Giriş Yap
+                </button>
+            </form>
+            
+            <div class="mt-6 flex items-center justify-between">
+                <span class="border-b border-slate-200 w-1/5 lg:w-1/4"></span>
+                <span class="text-xs text-center text-slate-500 uppercase">Veya şununla devam et</span>
+                <span class="border-b border-slate-200 w-1/5 lg:w-1/4"></span>
+            </div>
+            
+            <button type="button" class="w-full mt-6 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-3">
+                <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/><path fill="none" d="M1 1h22v22H1z"/></svg>
+                Google ile Giriş Yap
+            </button>
+        </div>
+    </div>
+
+    <!-- Özel Uyarı Modalı (İletişim için) -->
+    <div id="alert-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-slate-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 relative transform scale-95 transition-transform duration-300 text-center">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
+                <i class="fa-solid fa-info text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Bilgilendirme</h3>
+            <p class="text-sm text-slate-600 mb-6">İletişim sayfası şu an yapım aşamasındadır.</p>
+            <button id="close-alert" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                Tamam, anladım
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('ozetle-btn');
+            const input = document.getElementById('business-input');
+            const loader = document.getElementById('loader-container');
+            const results = document.getElementById('results-container');
+            const heroSection = document.getElementById('hero-section');
+            const loadingTextEl = document.getElementById('loading-text');
+
+            const loadingSteps = [
+                'Yorumlar çekiliyor...',
+                'Doğal dil işleme ile analiz ediliyor...',
+                'Top 3 beğeni ve şikayet belirleniyor...',
+                'Çözüm önerisi üretiliyor...'
+            ];
+
+            btn.addEventListener('click', () => {
+                if(input.value.trim() === '') {
+                    input.value = "Örnek İşletme"; 
+                }
+
+                // Arama alanını gizle
+                heroSection.classList.add('hidden');
+                
+                // Varsa eski sonuçları gizle ve yükleyiciyi göster
+                results.classList.add('hidden');
+                results.classList.remove('fade-in');
+                loader.classList.remove('hidden');
+
+                // Yükleme metinlerini sırayla değiştirme mantığı
+                let step = 0;
+                loadingTextEl.textContent = loadingSteps[0];
+                loadingTextEl.style.opacity = 1;
+                
+                const intervalId = setInterval(() => {
+                    step++;
+                    if (step < loadingSteps.length) {
+                        // Metin geçişi için opacity animasyonu
+                        loadingTextEl.style.opacity = 0;
+                        setTimeout(() => {
+                            loadingTextEl.textContent = loadingSteps[step];
+                            loadingTextEl.style.opacity = 1;
+                        }, 300); // CSS transition süresine uygun bekle
+                    } else {
+                        // Animasyon bitti
+                        clearInterval(intervalId);
+                        
+                        // Yükleyiciyi gizle
+                        loader.classList.add('hidden');
+                        
+                        // Arama alanını (istediğinde yeni arama yapabilsin diye) geri getir
+                        heroSection.classList.remove('hidden');
+                        input.value = ''; // Inputu temizle
+                        
+                        // Sonuçları göster
+                        results.classList.remove('hidden');
+                        results.classList.add('fade-in');
+
+                        // Sayfayı yavaşça sonuca kaydır
+                        setTimeout(() => {
+                            results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 100);
+                    }
+                }, 1500); // Her bir adım 1.5 saniye ekranda kalır
+            });
+            
+            // Enter tuşuna basıldığında tetikleme
+            input.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    btn.click();
+                }
+            });
+
+            // --- YENİ EKLENEN ETKİLEŞİMLER (Modallar ve Navigasyon) ---
+            const loginModal = document.getElementById('login-modal');
+            const alertModal = document.getElementById('alert-modal');
+            
+            // Yardımcı Fonksiyonlar: Modal Açma / Kapatma (Animasyonlu)
+            function openModal(modal) {
+                modal.classList.remove('hidden');
+                // Kısa bir gecikme ile opacity/transform sınıflarını uygulayarak animasyonu tetikliyoruz
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.querySelector('div').classList.remove('scale-95');
+                }, 10);
+            }
+
+            function closeModal(modal) {
+                modal.classList.add('opacity-0');
+                modal.querySelector('div').classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300); // CSS transition süresi ile eşzamanlı
+            }
+
+            // Giriş Yap Butonuna Tıklanınca
+            document.getElementById('nav-giris').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal(loginModal);
+            });
+            document.getElementById('close-login').addEventListener('click', () => closeModal(loginModal));
+
+            // İletişim Butonuna Tıklanınca (Özel Uyarı)
+            document.getElementById('nav-iletisim').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal(alertModal);
+            });
+            document.getElementById('close-alert').addEventListener('click', () => closeModal(alertModal));
+
+            // Ana Sayfa - En Üste Yumuşak Kaydırma
+            document.getElementById('nav-anasayfa').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Özellikler - Özellikler Bölümüne Yumuşak Kaydırma
+            document.getElementById('nav-ozellikler').addEventListener('click', (e) => {
+                e.preventDefault();
+                const ozelliklerSection = document.getElementById('ozellikler');
+                if (ozelliklerSection) {
+                    // Üstteki sabit menü boyunu(offset) hesaba katarak kaydır
+                    const y = ozelliklerSection.getBoundingClientRect().top + window.pageYOffset - 80;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            });
+
+            // Modalları arka plan karartısına (overlay) tıklayınca kapatma
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) closeModal(loginModal);
+                if (e.target === alertModal) closeModal(alertModal);
+            });
+        });
+    </script>
+</body>
+</html>
