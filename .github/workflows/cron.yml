@@ -1,0 +1,38 @@
+name: Otomatik Yorum Analizi Cron
+
+on:
+  schedule:
+    # Günde 10 kez otomatik çalışma
+    - cron: '0 0,2,5,7,10,12,15,17,20,22 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo Kodu Çek
+        uses: actions/checkout@v3
+
+      - name: Python Kur
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Kütüphaneleri Yükle
+        run: |
+          pip install playwright google-generativeai
+          playwright install --with-deps
+
+      - name: Betiği Çalıştır
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scraper.py
+
+      - name: Veritabanını Kaydet ve Pushla
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add reviews_database.db
+          git commit -m "Otomatik veri guncellemesi [Cron Job]" || exit 0
+          git push
