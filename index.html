@@ -1,9 +1,10 @@
+cat << 'EOF' > ~/Desktop/index.html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Özetle.ai - 81 İl ve İşletme Arama Destekli Yorum Analizi</title>
+  <title>Yokla - Gitmeden Önce Yokla | 81 İl İşletme ve Yorum Analizi</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,8 +19,29 @@
   <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-xs">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-2.5">
-        <div class="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-md shadow-indigo-100">Ö</div>
-        <span class="text-xl font-extrabold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent tracking-tight">Özetle.ai</span>
+        <!-- Seçtiğiniz Büyüteçli Yıldız Harita İğnesi Logosu -->
+        <svg class="w-10 h-10 rounded-xl shadow-md bg-slate-900 p-1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="yoklaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#06b6d4" />
+              <stop offset="100%" stop-color="#3b82f6" />
+            </linearGradient>
+            <filter id="yoklaGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="1.5" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+          <path d="M50 15 C33 15 20 28 20 45 C20 62 50 85 50 85 C50 85 80 62 80 45 C80 28 67 15 50 15 Z" 
+                stroke="url(#yoklaGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#yoklaGlow)"/>
+          <circle cx="50" cy="42" r="18" stroke="url(#yoklaGrad)" stroke-width="4" filter="url(#yoklaGlow)"/>
+          <line x1="63" y1="55" x2="74" y2="66" stroke="url(#yoklaGrad)" stroke-width="5" stroke-linecap="round" filter="url(#yoklaGlow)"/>
+          <polygon points="50,29 53,38 62,38 55,44 57,53 50,47 43,53 45,44 38,38 47,38" 
+                   fill="none" stroke="url(#yoklaGrad)" stroke-width="2.5" stroke-linejoin="round" filter="url(#yoklaGlow)"/>
+        </svg>
+        <div class="flex flex-col">
+          <span class="text-xl font-black bg-gradient-to-r from-indigo-600 via-cyan-500 to-teal-500 bg-clip-text text-transparent tracking-tight leading-none">Yokla</span>
+          <span class="text-[9px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">Gitmeden Önce Yokla</span>
+        </div>
       </div>
       <div class="flex items-center space-x-3">
         <span class="text-xs font-semibold px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full flex items-center shadow-xs">
@@ -34,10 +56,10 @@
   <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full space-y-7">
     <div class="text-center space-y-2">
       <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-3.5 py-1 rounded-full">
-        Türkiye Geneli Yorum ve Duygu Analizi
+        Türkiye Geneli Yorum ve İtibar Rehberi
       </span>
       <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-        İstediğiniz İşletmeyi Arayın veya Şehir Kategorilerini İnceleyin
+        Gitmeden Önce Yokla: Google Yorumlarını Saniyeler İçinde Keşfedin
       </h1>
       <p class="text-slate-500 text-xs sm:text-sm max-w-xl mx-auto">
         Kendi aradığınız işletmenin adını yazarak anında analiz edin veya 81 ilden dilediğiniz ili seçip en iyi kasap, fırın ve restoranları keşfedin.
@@ -47,8 +69,6 @@
     <!-- Kontrol Paneli: Şehir Seçimi + Özel Arama Kutusu -->
     <div class="bg-white p-5 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200 space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
-        
-        <!-- 1. Şehir Seçimi -->
         <div class="md:col-span-4">
           <label for="mainCitySelect" class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center">
             <i class="fa-solid fa-map-location-dot text-indigo-600 mr-1.5"></i>
@@ -60,7 +80,6 @@
           </div>
         </div>
 
-        <!-- 2. Özel İşletme Arama Kutusu -->
         <div class="md:col-span-8">
           <label for="customSearchInput" class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
             <span class="flex items-center">
@@ -76,14 +95,12 @@
             </div>
             <button id="customSearchBtn" type="button" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-md shadow-indigo-100 flex items-center space-x-1.5 whitespace-nowrap">
               <i class="fa-solid fa-wand-magic-sparkles"></i>
-              <span>Ara & Analiz Et</span>
+              <span>Ara & Yokla</span>
             </button>
           </div>
         </div>
-
       </div>
 
-      <!-- Hızlı Şehir Butonları -->
       <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100 text-xs">
         <span class="text-slate-400 font-medium mr-1">Hızlı Şehirler:</span>
         <button type="button" data-city="Konya" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">Konya</button>
@@ -96,7 +113,6 @@
         <button type="button" data-city="Bursa" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">Bursa</button>
       </div>
 
-      <!-- Kategori Filtre Butonları -->
       <div class="pt-2 flex flex-wrap gap-2 text-xs sm:text-sm font-semibold">
         <button type="button" data-cat="all" class="category-pill active px-3.5 py-1.5 border border-slate-200 rounded-xl transition flex items-center space-x-1.5">
           <i class="fa-solid fa-border-all"></i>
@@ -120,7 +136,7 @@
       </div>
     </div>
 
-    <!-- Başlık ve Liste Sayacı -->
+    <!-- Başlık ve Sayaç -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
       <div>
         <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center">
@@ -132,15 +148,15 @@
       <span id="bizCountDisplay" class="text-xs font-bold text-slate-600 bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-2xs self-start sm:self-auto">4 İşletme Listelendi</span>
     </div>
 
-    <!-- İşletme Kartları Vitrini -->
+    <!-- İşletme Kartları -->
     <div id="businessesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
     </div>
 
-    <!-- Seçilen İşletme AI Raporu Paneli -->
+    <!-- AI Rapor Paneli -->
     <div id="aiDetailSection" class="mt-10 pt-6 border-t border-slate-200 space-y-4">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full">Seçilen İşletme AI Raporu</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full">Seçilen İşletme Yokla Raporu</span>
           <h3 id="detailBizName" class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">İşletme Adı</h3>
           <p id="detailBizMeta" class="text-xs text-slate-500">Google Haritalar doğrulanmış yorum analizi.</p>
         </div>
@@ -186,7 +202,7 @@
   </main>
 
   <footer class="text-center py-6 text-xs text-slate-400 border-t border-slate-200 mt-10">
-    Özetle.ai © 2026 - Türkiye 81 İl ve Özel İşletme Arama Platformu
+    Yokla © 2026 - Türkiye 81 İl ve Özel İşletme Arama Platformu
   </footer>
 
   <script>
@@ -409,9 +425,9 @@
             </div>
           </div>
 
-          <button onclick="selectBusiness('${b.id}')" class="w-full mt-2 py-2 bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-600 font-semibold rounded-xl text-xs transition flex items-center justify-center space-x-1">
+          <button onclick="selectBusiness('${b.id}')" class="w-full mt-2 py-2 bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-600 font-semibold rounded-xl text-xs transition flex items-center justify-center space-x-1 cursor-pointer">
             <i class="fa-solid fa-chart-pie"></i>
-            <span>AI Yorum Raporunu Aç</span>
+            <span>Yokla AI Raporunu Aç</span>
           </button>
         </div>
       `).join('');
@@ -572,3 +588,5 @@
   </script>
 </body>
 </html>
+EOF
+echo "Masaustundeki index.html basariyla Yokla ve yeni logo ile guncellendi!"
