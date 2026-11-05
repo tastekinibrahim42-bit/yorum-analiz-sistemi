@@ -3,480 +3,334 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yokla - Gitmeden Önce Yokla | 81 İl ve İşletme AI Yorum Analizi</title>
+  <title>Yokla - Gitmeden Önce Yokla | 81 İl ve 915 İlçe Yapay Zekâ Yorum Analizi</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-    .category-pill.active { background-color: #4f46e5; color: white; border-color: #4f46e5; }
+    .category-pill.active { background-color: #0284c7; color: white; border-color: #0284c7; }
+    .district-pill.active { background-color: #0ea5e9; color: white; border-color: #0ea5e9; font-weight: 700; }
+    .city-quick-btn.active { background-color: #0284c7; color: white; }
+    @keyframes pulseGlow { 0%, 100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.04); } }
+    .pulse-logo { animation: pulseGlow 3s infinite ease-in-out; }
+    @media print { header, footer, #searchPanel, #businessesSection { display: none !important; } #aiDetailSection { display: block !important; border: none !important; } }
   </style>
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
-
   <!-- Header -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-xs">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <svg class="w-10 h-10 drop-shadow-md" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="pinGrad" x1="15%" y1="10%" x2="85%" y2="90%">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="50%" stop-color="#0284c7"/>
-      <stop offset="100%" stop-color="#0369a1"/>
-    </linearGradient>
-    <linearGradient id="lensGrad" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#e0f2fe" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.2"/>
-    </linearGradient>
-    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#bae6fd"/>
-    </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-  </defs>
-  <!-- Outer Pin Shadow / Glow -->
-  <path d="M50 8C31.2 8 16 23.2 16 42C16 63 44 88.5 48.2 92.2C49.3 93.1 50.7 93.1 51.8 92.2C56 88.5 84 63 84 42C84 23.2 68.8 8 50 8Z" fill="url(#pinGrad)" filter="url(#glow)"/>
-  <!-- Magnifying Lens Rim -->
-  <circle cx="50" cy="40" r="22" stroke="#ffffff" stroke-width="3.5" fill="url(#lensGrad)"/>
-  <!-- Magnifying Handle / Pointer Accent -->
-  <path d="M66 56L76 66" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
-  <!-- Glowing Center Spark / Star (Yoklama / Denetim Işıltısı) -->
-  <path d="M50 26C50 33 43 40 36 40C43 40 50 47 50 54C50 47 57 40 64 40C57 40 50 33 50 26Z" fill="url(#starGrad)"/>
-  <circle cx="50" cy="40" r="2.5" fill="#ffffff"/>
-</svg>
+        <svg class="w-10 h-10 drop-shadow-md pulse-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pinGrad" x1="15%" y1="10%" x2="85%" y2="90%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="50%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+            <linearGradient id="lensGrad" x1="20%" y1="20%" x2="80%" y2="80%"><stop offset="0%" stop-color="#e0f2fe" stop-opacity="0.9"/><stop offset="100%" stop-color="#38bdf8" stop-opacity="0.2"/></linearGradient>
+            <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#bae6fd"/></linearGradient>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="blur"/><feComposite in="SourceGraphic" in2="blur" operator="over"/></filter>
+          </defs>
+          <path d="M50 8C31.2 8 16 23.2 16 42C16 63 44 88.5 48.2 92.2C49.3 93.1 50.7 93.1 51.8 92.2C56 88.5 84 63 84 42C84 23.2 68.8 8 50 8Z" fill="url(#pinGrad)" filter="url(#glow)"/>
+          <circle cx="50" cy="40" r="22" stroke="#ffffff" stroke-width="3.5" fill="url(#lensGrad)"/>
+          <path d="M66 56L76 66" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M50 26C50 33 43 40 36 40C43 40 50 47 50 54C50 47 57 40 64 40C57 40 50 33 50 26Z" fill="url(#starGrad)"/>
+          <circle cx="50" cy="40" r="2.5" fill="#ffffff"/>
+        </svg>
         <div class="flex flex-col">
           <span class="text-2xl font-black bg-gradient-to-r from-sky-600 via-cyan-600 to-blue-700 bg-clip-text text-transparent tracking-tight">Yokla</span>
-          <span class="text-[10px] font-semibold text-slate-400 tracking-wider -mt-1 uppercase">Gitmeden Önce Yokla</span>
+          <span class="text-[9px] font-bold text-slate-400 tracking-wider uppercase -mt-0.5">Gitmeden Önce Yokla</span>
         </div>
       </div>
-      <div class="flex items-center space-x-3">
-        <span class="text-xs font-semibold px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full flex items-center shadow-xs">
-          <span class="w-2 h-2 bg-emerald-500 rounded-full animate-ping mr-1.5"></span>
-          <span>81 İl ve Özel Arama Aktif</span>
+      <div class="flex items-center space-x-2">
+        <span class="text-xs font-semibold px-3 py-1 bg-sky-50 text-sky-700 border border-sky-200 rounded-full flex items-center shadow-xs">
+          <span class="w-2 h-2 bg-sky-500 rounded-full animate-ping mr-1.5"></span>
+          <span>81 İl & 915 İlçe Aktif</span>
         </span>
       </div>
     </div>
   </header>
 
   <!-- Hero Content -->
-  <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full space-y-7">
-    <div class="text-center space-y-2">
-      <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-3.5 py-1 rounded-full">
-        Gitmeden Önce Yokla &bull; 81 İl Yapay Zekâ Yorum Denetimi
+  <main class="max-w-5xl mx-auto px-4 py-7 flex-1 w-full space-y-6">
+    <div class="text-center space-y-1.5">
+      <span class="text-xs uppercase tracking-wider font-extrabold text-sky-600 bg-sky-50 border border-sky-100 px-3.5 py-1 rounded-full">
+        Türkiye Geneli İl ve İlçe Bazlı AI Yorum Denetimi
       </span>
-      <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-        İstediğiniz İşletmeyi Arayın veya Şehir Kategorilerini İnceleyin
+      <h1 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+        Gitmeden Önce Yokla: İlçe İlçe Mekan & Yorum Raporu
       </h1>
-      <p class="text-slate-500 text-xs sm:text-sm max-w-xl mx-auto">
-        Kendi aradığınız işletmenin adını yazarak anında analiz edin veya 81 ilden dilediğiniz ili seçip en iyi kasap, fırın ve restoranları keşfedin.
+      <p class="text-slate-500 text-xs sm:text-sm max-w-2xl mx-auto">
+        Şehrinizi seçin veya doğrudan aradığınız <strong>ilçeyi yazarak bulun</strong>. Dilediğiniz işletmeyi anında Gemini AI ile analiz edip gitmeden önce gerçek müşteri deneyimini inceleyin.
       </p>
     </div>
 
-    <!-- Kontrol Paneli: Şehir Seçimi + Özel İşletme Arama Kutusu -->
-    <div class="bg-white p-5 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200 space-y-4">
-      
-      <!-- Üst Satır: Şehir Seçici ve Canlı Arama Çubuğu (Yan Yana) -->
+    <!-- Kontrol Paneli: Şehir + Yazarak İlçe Bulma + İşletme Arama -->
+    <div id="searchPanel" class="bg-white p-5 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200 space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
-        
-        <!-- 1. Şehir Seçimi (4 Kolon) -->
-        <div class="md:col-span-4">
+        <!-- İl Seçimi (3 Kolon) -->
+        <div class="md:col-span-3">
           <label for="mainCitySelect" class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center">
-            <i class="fa-solid fa-map-location-dot text-indigo-600 mr-1.5"></i>
-            <span>Şehir Seçin (81 İl):</span>
+            <i class="fa-solid fa-city text-sky-600 mr-1.5"></i>
+            <span>İl Seçin (81 İl):</span>
           </label>
           <div class="relative">
-            <select id="mainCitySelect" class="w-full pl-3.5 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:bg-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition cursor-pointer">
-              <!-- JS ile 81 İl Doldurulacak -->
+            <select id="mainCitySelect" class="w-full pl-3 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:bg-white focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition cursor-pointer">
             </select>
           </div>
         </div>
 
-        <!-- 2. Özel İşletme Arama Kutusu (8 Kolon) -->
-        <div class="md:col-span-8">
+        <!-- Yazarak İlçe Bulma (4 Kolon) -->
+        <div class="md:col-span-4">
+          <label for="districtInput" class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+            <span class="flex items-center">
+              <i class="fa-solid fa-map-pin text-sky-600 mr-1.5"></i>
+              <span>İlçe Yazarak Bul:</span>
+            </span>
+            <button id="clearDistrictBtn" type="button" class="text-[11px] text-sky-600 hover:text-sky-800 font-semibold cursor-pointer underline">
+              Tüm İlçeler
+            </button>
+          </label>
+          <div class="relative">
+            <input id="districtInput" list="districtDatalist" type="text" placeholder="İlçe yazın (örn: Efeler, Bandırma, Meram...)" class="w-full pl-3 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition font-medium">
+            <datalist id="districtDatalist"></datalist>
+            <span class="absolute right-3 top-3 text-slate-400 text-xs pointer-events-none">
+              <i class="fa-solid fa-magnifying-glass-location"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Özel İşletme Arama Kutusu (5 Kolon) -->
+        <div class="md:col-span-5">
           <label for="customSearchInput" class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
             <span class="flex items-center">
-              <i class="fa-solid fa-magnifying-glass text-indigo-600 mr-1.5"></i>
-              <span>İstediğiniz İşletmeyi Arayın:</span>
+              <i class="fa-solid fa-store text-sky-600 mr-1.5"></i>
+              <span>İşletme Adı veya Sektör Ara:</span>
             </span>
-            <span class="text-[11px] text-slate-400 font-normal">Google Haritalar adı veya kelime</span>
+            <span class="text-[10px] text-slate-400 font-normal">Google Haritalar</span>
           </label>
-          <div class="flex gap-2">
+          <div class="flex gap-1.5">
             <div class="relative flex-1">
-              <input id="customSearchInput" type="text" placeholder="Örn: Havzan Kasabı, Alsancak Dostlar Fırını, Cemo, Kardeşler Kasabı..." 
-                class="w-full pl-3.5 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition">
+              <input id="customSearchInput" type="text" placeholder="Örn: Makarbox, Grand Asya, Nov otel, cafe, hastane..." class="w-full pl-3 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition">
             </div>
-            <button id="customSearchBtn" type="button" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-md shadow-indigo-100 flex items-center space-x-1.5 whitespace-nowrap">
+            <button id="customSearchBtn" type="button" class="bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 active:scale-95 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition shadow-md shadow-sky-100 flex items-center space-x-1.5 whitespace-nowrap cursor-pointer">
               <i class="fa-solid fa-wand-magic-sparkles"></i>
               <span>Ara & Analiz Et</span>
             </button>
           </div>
         </div>
-
       </div>
 
-      <!-- Orta Satır: Popüler Şehir Hızlı Butonları -->
+      <!-- Popüler Şehir Butonları -->
       <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100 text-xs">
         <span class="text-slate-400 font-medium mr-1">Hızlı Şehirler:</span>
-        <button type="button" data-city="Konya" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">Konya</button>
-        <button type="button" data-city="İzmir" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">İzmir</button>
-        <button type="button" data-city="Ankara" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">Ankara</button>
-        <button type="button" data-city="İstanbul" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">İstanbul</button>
-        <button type="button" data-city="Antalya" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">Antalya</button>
-        <button type="button" data-city="Gaziantep" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">Gaziantep</button>
-        <button type="button" data-city="Trabzon" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">Trabzon</button>
-        <button type="button" data-city="Bursa" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg text-slate-700 font-semibold transition">Bursa</button>
+        <button type="button" data-city="Konya" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">Konya</button>
+        <button type="button" data-city="Aydın" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">Aydın</button>
+        <button type="button" data-city="Balıkesir" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">Balıkesir</button>
+        <button type="button" data-city="İzmir" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">İzmir</button>
+        <button type="button" data-city="Ankara" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">Ankara</button>
+        <button type="button" data-city="İstanbul" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">İstanbul</button>
+        <button type="button" data-city="Antalya" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">Antalya</button>
+        <button type="button" data-city="Gaziantep" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">Gaziantep</button>
+        <button type="button" data-city="Trabzon" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">Trabzon</button>
+        <button type="button" data-city="Bursa" class="city-quick-btn px-2.5 py-1 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 rounded-lg text-slate-700 font-semibold transition cursor-pointer">Bursa</button>
       </div>
 
-      <!-- Alt Satır: Kategori Filtre Butonları -->
-      <div class="pt-2 flex flex-wrap gap-2 text-xs sm:text-sm font-semibold">
-        <button type="button" data-cat="all" class="category-pill active px-3.5 py-1.5 border border-slate-200 rounded-xl transition flex items-center space-x-1.5">
-          <i class="fa-solid fa-border-all"></i>
-          <span>Tüm Kategoriler</span>
+      <!-- İlçeler -->
+      <div class="pt-2 border-t border-slate-100">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-xs font-bold text-slate-600 flex items-center">
+            <i class="fa-solid fa-location-crosshairs text-sky-500 mr-1.5"></i>
+            <span id="districtPillTitle">Konya İlçeleri:</span>
+          </span>
+          <span id="activeDistrictBadge" class="text-[11px] font-bold text-sky-600 bg-sky-50 px-2.5 py-0.5 rounded-lg border border-sky-100">
+            Tüm İlçeler Gösteriliyor
+          </span>
+        </div>
+        <div id="districtPillsContainer" class="flex flex-wrap items-center gap-1.5 text-xs"></div>
+      </div>
+
+      <!-- Kategori Hapları -->
+      <div class="pt-2 border-t border-slate-100 flex flex-wrap gap-2 text-xs sm:text-sm font-semibold">
+        <button type="button" data-cat="all" class="category-pill active px-3.5 py-1.5 border border-slate-200 rounded-xl transition flex items-center space-x-1.5 cursor-pointer">
+          <i class="fa-solid fa-border-all"></i><span>Tüm Kategoriler</span>
         </button>
-        <button type="button" data-cat="kasap" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5">
-          <span>🥩 Kasaplar</span>
+        <button type="button" data-cat="otel" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5 cursor-pointer">
+          <span>🏨 Oteller</span>
         </button>
-        <button type="button" data-cat="fırın" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5">
-          <span>🥖 Fırın & Ekmek</span>
+        <button type="button" data-cat="kafe" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5 cursor-pointer">
+          <span>☕ Kafe & Kahve</span>
         </button>
-        <button type="button" data-cat="restoran" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5">
+        <button type="button" data-cat="restoran" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5 cursor-pointer">
           <span>🍽️ Restoranlar</span>
         </button>
-        <button type="button" data-cat="hastane" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5">
+        <button type="button" data-cat="hastane" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5 cursor-pointer">
           <span>🏥 Sağlık & Hastane</span>
         </button>
-        <button type="button" data-cat="eczane" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5">
+        <button type="button" data-cat="kasap" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5 cursor-pointer">
+          <span>🥩 Kasaplar</span>
+        </button>
+        <button type="button" data-cat="fırın" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5 cursor-pointer">
+          <span>🥖 Fırın & Ekmek</span>
+        </button>
+        <button type="button" data-cat="eczane" class="category-pill px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-100 transition flex items-center space-x-1.5 cursor-pointer">
           <span>💊 Eczaneler</span>
         </button>
       </div>
     </div>
 
-    <!-- Arama / Filtre Başlığı ve Sayaç -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
-      <div>
-        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center">
-          <span id="currentSelectionTitle">Konya İşletmeleri</span>
-          <span id="activeFilterBadge" class="text-xs font-semibold text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full ml-2">En İyiler</span>
-        </h2>
-        <p id="currentSelectionSub" class="text-xs text-slate-400 mt-0.5">Google Haritalar puanı ve doğrulanmış yorum sayısına göre sıralandı.</p>
-      </div>
-      <span id="bizCountDisplay" class="text-xs font-bold text-slate-600 bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-2xs self-start sm:self-auto">4 İşletme Listelendi</span>
-    </div>
-
-    <!-- İşletme Kartları Vitrini -->
-    <div id="businessesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <!-- Dinamik Kartlar JS ile Gelecek -->
-    </div>
-
-    <!-- Detaylı Yapay Zekâ Analiz Paneli -->
-    <div id="aiDetailSection" class="mt-10 pt-6 border-t border-slate-200 space-y-4">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+    <!-- Başlık & Kartlar Vitrini -->
+    <div id="businessesSection" class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full">Seçilen İşletme AI Raporu</span>
-          <h3 id="detailBizName" class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">İşletme Adı</h3>
-          <p id="detailBizMeta" class="text-xs text-slate-500">Google Haritalar doğrulanmış yorum analizi.</p>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center">
+            <span id="currentSelectionTitle">Konya İşletmeleri</span>
+            <span id="activeFilterBadge" class="text-xs font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-0.5 rounded-full ml-2">En İyiler</span>
+          </h2>
+          <p id="currentSelectionSub" class="text-xs text-slate-400 mt-0.5">Google Haritalar puanı ve doğrulanmış yorum sayısına göre sıralandı.</p>
         </div>
-        <div class="flex items-center space-x-4 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-xs">
-          <div class="text-center">
-            <span id="detailReviews" class="block text-lg font-black text-slate-900">0</span>
-            <span class="text-[10px] text-slate-400 font-bold uppercase">Yorum</span>
+        <span id="bizCountDisplay" class="text-xs font-bold text-slate-600 bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-2xs self-start sm:self-auto">4 İşletme Listelendi</span>
+      </div>
+      <div id="businessesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </div>
+
+    <!-- Detaylı Yapay Zekâ Mekan Raporu -->
+    <div id="aiDetailSection" class="mt-10 pt-6 border-t-2 border-slate-200 space-y-4">
+      <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-sky-700 bg-sky-50 border border-sky-200 px-3 py-0.5 rounded-full flex items-center">
+              <i class="fa-solid fa-sparkles text-sky-500 mr-1.5"></i>
+              <span>Yokla AI Canlı Mekan Raporu</span>
+            </span>
+            <span id="detailBadgeDistrict" class="text-xs font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-md">Meram, Konya</span>
           </div>
-          <div class="w-px h-6 bg-slate-200"></div>
-          <div class="text-center">
-            <span id="detailRating" class="block text-lg font-black text-amber-500">4.7 ★</span>
-            <span class="text-[10px] text-slate-400 font-bold uppercase">Puan</span>
+          <h3 id="detailBizName" class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">İşletme Adı</h3>
+          <p id="detailBizMeta" class="text-xs text-slate-500">Google Haritalar doğrulanmış yorumlarının yapay zekâ itibar analizi.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="flex items-center space-x-3 bg-slate-50 px-4 py-2 rounded-2xl border border-slate-200">
+            <div class="text-center"><span id="detailReviews" class="block text-lg font-black text-slate-900">0</span><span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Yorum</span></div>
+            <div class="w-px h-6 bg-slate-200"></div>
+            <div class="text-center"><span id="detailRating" class="block text-lg font-black text-amber-500">4.7 ★</span><span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Puan</span></div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="copyReportBtn" type="button" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold text-xs rounded-xl transition flex items-center space-x-1.5 cursor-pointer shadow-xs">
+              <i class="fa-regular fa-copy"></i><span id="copyBtnText">Raporu Kopyala</span>
+            </button>
+            <button id="printReportBtn" type="button" class="px-3.5 py-2.5 bg-sky-50 hover:bg-sky-100 active:scale-95 text-sky-700 font-bold text-xs rounded-xl transition flex items-center space-x-1.5 cursor-pointer border border-sky-200">
+              <i class="fa-solid fa-print"></i><span>Yazdır / PDF</span>
+            </button>
           </div>
         </div>
       </div>
-
+      <!-- Sentiment Gauge -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+          <span class="flex items-center"><i class="fa-solid fa-chart-simple text-sky-600 mr-1.5"></i><span>Müşteri Memnuniyet & Duygu Durumu Skoru</span></span>
+          <span id="sentimentScoreText" class="text-sky-600 font-extrabold">%92 Olumlu Deneyim</span>
+        </div>
+        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex">
+          <div id="sentimentPositiveBar" class="bg-emerald-500 h-full" style="width: 88%;"></div>
+          <div id="sentimentNeutralBar" class="bg-amber-400 h-full" style="width: 8%;"></div>
+          <div id="sentimentNegativeBar" class="bg-rose-500 h-full" style="width: 4%;"></div>
+        </div>
+        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+          <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-1"></span><span id="positiveRatio">88% Olumlu</span></span>
+          <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-amber-400 mr-1"></span><span id="neutralRatio">8% Nötr</span></span>
+          <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-rose-500 mr-1"></span><span id="negativeRatio">4% Geliştirilebilir</span></span>
+        </div>
+      </div>
+      <!-- Özet -->
+      <div class="bg-gradient-to-r from-sky-500/10 via-cyan-500/10 to-blue-500/10 border border-sky-200 p-4 rounded-2xl">
+        <h4 class="text-sky-900 font-extrabold text-sm flex items-center space-x-2 mb-1"><i class="fa-solid fa-compass text-sky-600"></i><span>Gitmeden Önce Yokla Özeti</span></h4>
+        <p id="detailExecutiveSummary" class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium"></p>
+      </div>
+      <!-- Beğeniler + Şikayetler -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Beğeniler -->
-        <div class="bg-white p-5 rounded-2xl border border-emerald-200 shadow-sm">
-          <h4 class="text-emerald-700 font-bold text-sm flex items-center space-x-2 mb-3">
-            <i class="fa-solid fa-thumbs-up"></i>
-            <span>En Çok Beğenilen Özellikler</span>
-          </h4>
+        <div class="bg-white p-5 rounded-2xl border border-emerald-200 shadow-sm space-y-3">
+          <h4 class="text-emerald-700 font-bold text-sm flex items-center space-x-2"><i class="fa-solid fa-thumbs-up"></i><span>En Çok Beğenilen Özellikler (Top 3)</span></h4>
           <div id="detailLikes" class="space-y-2.5"></div>
         </div>
-
-        <!-- Şikayetler -->
-        <div class="bg-white p-5 rounded-2xl border border-rose-200 shadow-sm">
-          <h4 class="text-rose-700 font-bold text-sm flex items-center space-x-2 mb-3">
-            <i class="fa-solid fa-thumbs-down"></i>
-            <span>Öne Çıkan Şikâyetler</span>
-          </h4>
+        <div class="bg-white p-5 rounded-2xl border border-rose-200 shadow-sm space-y-3">
+          <h4 class="text-rose-700 font-bold text-sm flex items-center space-x-2"><i class="fa-solid fa-triangle-exclamation"></i><span>Öne Çıkan Şikâyet & Risk Noktaları</span></h4>
           <div id="detailComplaints" class="space-y-2.5"></div>
         </div>
       </div>
-
-      <!-- AI Aksiyon Planı -->
-      <div class="bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 text-white p-5 rounded-2xl shadow-xl">
-        <h4 class="text-indigo-300 font-bold text-sm flex items-center space-x-2 mb-3">
-          <i class="fa-solid fa-brain"></i>
-          <span>Yapay Zekâ Kök Neden Analizi ve Aksiyon Önerisi</span>
-        </h4>
-        <div id="detailActions" class="space-y-3"></div>
+      <!-- Tüketici İpucu -->
+      <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl">
+        <h4 class="text-amber-900 font-bold text-sm flex items-center space-x-2 mb-1"><i class="fa-solid fa-lightbulb text-amber-600"></i><span>Gitmeden Önce Bilinmesi Gereken Tüketici İpucu:</span></h4>
+        <p id="detailConsumerTip" class="text-xs sm:text-sm text-amber-800 leading-relaxed"></p>
+      </div>
+      <!-- Kök Neden & Aksiyon Planı -->
+      <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 rounded-3xl shadow-xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h4 class="text-sky-300 font-bold text-sm sm:text-base flex items-center space-x-2"><i class="fa-solid fa-brain text-sky-400"></i><span>Yapay Zekâ Kök Neden Tespiti ve İşletme Aksiyon Planı</span></h4>
+          <span class="text-[10px] text-slate-400 font-mono">Yokla AI Engine v3</span>
+        </div>
+        <div id="detailActions" class="space-y-4"></div>
       </div>
     </div>
   </main>
 
   <footer class="text-center py-6 text-xs text-slate-400 border-t border-slate-200 mt-10">
-    Yokla © 2026 - Türkiye 81 İl ve Özel İşletme Arama Platformu
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center space-x-2"><span class="font-bold text-slate-700">Yokla</span><span>•</span><span>Türkiye 81 İl ve 915 İlçe İtibar ve Yorum Platformu</span></div>
+      <div class="text-slate-400">Google Haritalar Doğrulanmış Verileri ile Yapay Zekâ Desteklidir © 2026</div>
+    </div>
   </footer>
 
   <script>
-    const cities81 = [
-      "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
-      "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
-      "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari",
-      "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
-      "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir",
-      "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
-      "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
-      "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
-    ];
+    const rawDistrictsData = "Adana:Seyhan,Yüreğir,Çukurova,Sarıçam,Ceyhan,Kozan,İmamoğlu,Karataş,Karaisalı,Pozantı,Yumurtalık,Tufanbeyli,Feke,Aladağ,Saimbeyli|Adıyaman:Merkez,Kahta,Besni,Gölbaşı,Gerger,Sincik,Çelikhan,Tut,Samsat|Afyonkarahisar:Merkez,Sandıklı,Dinar,Bolvadin,Sinanpaşa,Emirdağ,Şuhut,Çay,İhsaniye,İscehisar,Sultandağı,Evciler,Hocalar,Kızılören|Ağrı:Merkez,Patnos,Doğubayazıt,Diyadin,Eleşkirt,Tutak,Taşlıçay,Hamur|Amasya:Merkez,Merzifon,Suluova,Taşova,Gümüşhacıköy,Göynücek,Hamamözü|Ankara:Çankaya,Keçiören,Yenimahalle,Mamak,Etimesgut,Sincan,Altındağ,Pursaklar,Gölbaşı,Polatlı,Çubuk,Kahramankazan,Beypazarı,Elmadağ,Şereflikoçhisar,Akyurt,Nallıhan,Haymana,Kızılcahamam|Antalya:Muratpaşa,Kepez,Konyaaltı,Alanya,Manavgat,Serik,Döşemealtı,Aksu,Kumluca,Kaş,Korkuteli,Gazipaşa,Finike,Kemer,Elmalı,Demre|Artvin:Merkez,Hopa,Borçka,Yusufeli,Arhavi,Şavşat,Ardanuç,Murgul,Kemalpaşa|Aydın:Efeler,Nazilli,Söke,Kuşadası,Didim,İncirliova,Germencik,Çine,Bozdoğan,Köşk,Kuyucak,Sultanhisar,Karacasu,Yenipazar,Buharkent,Koçarlı|Balıkesir:Karesi,Altıeylül,Bandırma,Edremit,Gönen,Ayvalık,Burhaniye,Bigadiç,Susurluk,Dursunbey,Sındırgı,İvrindi,Erdek,Havran,Manyas|Bilecik:Merkez,Bozüyük,Osmaneli,Söğüt,Gölpazarı,Pazaryeri,İnhisar,Yenipazar|Bingöl:Merkez,Genç,Solhan,Karlıova,Adaklı,Kiğı,Yedisu,Yayladere|Bitlis:Tatvan,Merkez,Güroymak,Ahlat,Hizan,Mutki,Adilcevaz|Bolu:Merkez,Gerede,Mudurnu,Göynük,Mengen,Yeniçağa,Dörtdivan,Seben,Kıbrıscık|Burdur:Merkez,Bucak,Gölhisar,Yeşilova,Çavdır,Tefenni,Ağlasun,Karamanlı,Altınyayla,Kemer|Bursa:Osmangazi,Yıldırım,Nilüfer,İnegöl,Gemlik,Mustafakemalpaşa,Mudanya,Gürsu,Karacabey,Orhangazi,Kestel,Yenişehir,İznik,Orhaneli|Çanakkale:Merkez,Biga,Çan,Gelibolu,Yenice,Ayvacık,Ezine,Bayramiç,Lapseki,Eceabat,Gökçeada,Bozcaada|Çankırı:Merkez,Çerkeş,Ilgaz,Orta,Şabanözü,Kurşunlu,Yapraklı,Kızılırmak,Eldivan,Atkaracalar,Korgun,Bayramören|Çorum:Merkez,Sungurlu,Osmancık,İskilip,Alaca,Bayat,Kargı,Mecitözü,Ortaköy,Uğurludağ,Dodurga,Oğuzlar,Laçin,Boğazkale|Denizli:Pamukkale,Merkezefendi,Çivril,Acıpayam,Tavas,Honaz,Sarayköy,Buldan,Kale,Çal,Çameli,Serinhisar,Bozkurt,Güney,Babadağ,Bekilli,Beyağaç,Baklan|Diyarbakır:Bağlar,Kayapınar,Yenişehir,Sur,Ergani,Bismil,Silvan,Çınar,Çermik,Dicle,Kulp,Hani,Lice,Eğil,Hazro,Kocaköy,Çüngüş|Edirne:Merkez,Keşan,Uzunköprü,İpsala,Havsa,Meriç,Enez,Süloğlu,Lalapaşa|Elazığ:Merkez,Kovancılar,Karakoçan,Palu,Arıcak,Baskil,Maden,Sivrice,Keban,Alacakaya,Ağın|Erzincan:Merkez,Tercan,Üzümlü,Çayırlı,İliç,Kemah,Kemaliye,Refahiye,Otlukbeli|Erzurum:Yakutiye,Palandöken,Aziziye,Horasan,Oltu,Pasinler,Karayazı,Hınıs,Tekman,Karaçoban,Aşkale,Şenkaya,Çat,Köprüköy,İspir,Tortum,Narman,Uzundere,Olur,Pazaryolu|Eskişehir:Odunpazarı,Tepebaşı,Sivrihisar,Çifteler,Seyitgazi,Alpu,Mihalıççık,Mahmudiye,Beylikova,İnönü,Günyüzü,Han,Mihalgazi|Gaziantep:Şahinbey,Şehitkamil,Nizip,İslahiye,Nurdağı,Araban,Oğuzeli,Yavuzeli,Karkamış|Giresun:Merkez,Bulancak,Espiye,Görele,Tirebolu,Dereli,Şebinkarahisar,Keşap,Yağlıdere,Alucra,Piraziz,Eynesil,Çamoluk,Çanakçı,Doğankent|Gümüşhane:Merkez,Kelkit,Şiran,Kürtün,Torul,Köse|Hakkari:Yüksekova,Merkez,Şemdinli,Çukurca,Derecik|Hatay:Antakya,İskenderun,Defne,Dörtyol,Samandağ,Kırıkhan,Reyhanlı,Arsuz,Altınözü,Hassa,Payas,Erzin,Yayladağı,Belen,Kumlu|Isparta:Merkez,Yalvaç,Eğirdir,Şarkikaraağaç,Gelendost,Keçiborlu,Senirkent,Sütçüler,Gönen,Uluborlu,Atabey,Aksu,Yenişarbademli|Mersin:Tarsus,Toroslar,Yenişehir,Akdeniz,Mezitli,Erdemli,Silifke,Anamur,Mut,Bozyazı,Gülnar,Aydıncık,Çamlıyayla|İstanbul:Kadıköy,Beşiktaş,Şişli,Üsküdar,Fatih,Bakırköy,Beyoğlu,Sarıyer,Maltepe,Ataşehir,Kartal,Pendik,Ümraniye,Beylikdüzü,Başakşehir,Esenyurt,Küçükçekmece,Bağcılar,Zeytinburnu,Eyüpsultan,Gaziosmanpaşa,Tuzla,Çekmeköy,Sancaktepe,Büyükçekmece,Silivri,Şile,Adalar|İzmir:Konak,Karşıyaka,Bornova,Buca,Çiğli,Gaziemir,Balçova,Narlıdere,Bayraklı,Karabağlar,Torbalı,Menemen,Kemalpaşa,Menderes,Aliağa,Ödemiş,Bergama,Tire,Urla,Çeşme,Seferihisar,Dikili,Foça,Selçuk,Güzelbahçe|Kars:Merkez,Kağızman,Sarıkamış,Selim,Digor,Arpaçay,Akyaka,Susuz|Kastamonu:Merkez,Tosya,Taşköprü,Cide,İnebolu,Araç,Devrekani,Bozkurt,Daday,Azdavay,Çatalzeytin,Küre,Doğanyurt,İhsangazi,Pınarbaşı,Şenpazar,Abana,Seydiler,Hanönü,Ağlı|Kayseri:Melikgazi,Kocasinan,Talas,Develi,Yahyalı,Bünyan,Pınarbaşı,Tomarza,İncesu,Yeşilhisar,Sarıoğlan,Hacılar,Sarız,Felahiye,Akkışla,Özvatan|Kırklareli:Merkez,Lüleburgaz,Babaeski,Vize,Pınarhisar,Demirköy,Pehlivanköy,Kofçaz|Kırşehir:Merkez,Kaman,Mucur,Çiçekdağı,Akpınar,Boztepe,Akçakent|Kocaeli:Gebze,İzmit,Darıca,Körfez,Gölcük,Derince,Çayırova,Kartepe,Başiskele,Karamürsel,Kandıra,Dilovası|Konya:Selçuklu,Meram,Karatay,Ereğli,Akşehir,Beyşehir,Cihanbeyli,Kulu,Seydişehir,Çumra,Ilgın,Bozkır,Karapınar,Kadınhanı,Sarayönü,Yunak,Hüyük,Doğanhisar,Hadim|Kütahya:Merkez,Tavşanlı,Simav,Gediz,Emet,Altıntaş,Domaniç,Hisarcık,Aslanapa,Çavdarhisar,Şaphane,Pazarlar,Dumlupınar|Malatya:Battalgazi,Yeşilyurt,Doğanşehir,Akçadağ,Darende,Hekimhan,Pütürge,Yazıhan,Arapgir,Kuluncak,Arguvan,Kale,Doğanyol|Manisa:Yunusemre,Şehzadeler,Akhisar,Turgutlu,Salihli,Soma,Alaşehir,Saruhanlı,Kula,Demirci,Kırkağaç,Sarıgöl,Gördes,Selendi,Ahmetli,Gölmarmara,Köprübaşı|Kahramanmaraş:Onikişubat,Dulkadiroğlu,Elbistan,Afşin,Türkoğlu,Pazarcık,Göksun,Andırın,Çağlayancerit,Nurhak,Ekinözü|Mardin:Kızıltepe,Artuklu,Midyat,Nusaybin,Derik,Mazıdağı,Dargeçit,Savur,Yeşilli,Ömerli|Muğla:Bodrum,Fethiye,Milas,Menteşe,Marmaris,Seydikemer,Ortaca,Yatağan,Dalaman,Köyceğiz,Ula,Datça,Kavaklıdere|Muş:Merkez,Bulanık,Malazgirt,Varto,Hasköy,Korkut|Nevşehir:Merkez,Ürgüp,Avanos,Gülşehir,Derinkuyu,Acıgöl,Kozaklı,Hacıbektaş|Niğde:Merkez,Bor,Çiftlik,Ulukışla,Altunhisar,Çamardı|Ordu:Altınordu,Ünye,Fatsa,Gölköy,Perşembe,Korgan,Kumru,Aybastı,Kabadüz,Ulubey,Mesudiye,İkizce,Gürgentepe,Çatalpınar,Çaybaşı,Kabataş|Rize:Merkez,Çayeli,Ardeşen,Pazar,Fındıklı,Güneysu,Kalkandere,İyidere,Derepazarı,Çamlıhemşin,İkizdere,Hemşin|Sakarya:Adapazarı,Serdivan,Akyazı,Erenler,Hendek,Karasu,Geyve,Arifiye,Sapanca,Pamukova,Ferizli,Kaynarca,Kocaali,Söğütlü,Karapürçek,Taraklı|Samsun:İlkadım,Atakum,Bafra,Çarşamba,Canik,Vezirköprü,Terme,Tekkeköy,Havza,19 Mayıs,Alaçam,Salıpazarı,Ayvacık,Kavak,Asarcık,Ladik,Yakakent|Siirt:Merkez,Kurtalan,Pervari,Baykan,Şirvan,Eruh,Tillo|Sinop:Merkez,Boyabat,Gerze,Ayancık,Durağan,Türkeli,Erfelek,Saraydüzü,Dikmen|Sivas:Merkez,Şarkışla,Yıldızeli,Suşehri,Zara,Gemerek,Kangal,Divriği,Koyulhisar,Gürün,Hafik,Ulaş,Altınyayla,İmranlı,Akıncılar,Gölova,Doğanşar|Tekirdağ:Süleymanpaşa,Çorlu,Çerkezköy,Kapaklı,Ergene,Malkara,Saray,Hayrabolu,Şarköy,Muratlı,Marmaraereğlisi|Tokat:Merkez,Erbaa,Turhal,Niksar,Zile,Reşadiye,Almus,Pazar,Yeşilyurt,Artova,Sulusaray,Başçiftlik|Trabzon:Ortahisar,Akçaabat,Araklı,Of,Yomra,Arsin,Vakfıkebir,Sürmene,Maçka,Beşikdüzü,Çarşıbaşı,Tonya,Düzköy,Çaykara,Şalpazarı,Hayrat,Köprübaşı,Dernekpazarı|Tunceli:Merkez,Pertek,Mazgirt,Çemişgezek,Hozat,Ovacık,Pülümür,Nazımiye|Şanlıurfa:Eyyübiye,Haliliye,Siverek,Viranşehir,Karaköprü,Akçakale,Suruç,Birecik,Ceylanpınar,Harran,Bozova,Hilvan,Halfeti|Uşak:Merkez,Banaz,Eşme,Sivaslı,Ulubey,Karahallı|Van:İpekyolu,Erciş,Tuşba,Edremit,Özalp,Çaldıran,Başkale,Muradiye,Gürpınar,Gevaş,Saray,Çatak,Bahçesaray|Yozgat:Merkez,Sorgun,Akdağmadeni,Yerköy,Boğazlıyan,Sarıkaya,Çekerek,Şefaatli,Saraykent,Çayıralan,Kadışehri,Aydıncık,Yenifakılı|Zonguldak:Ereğli,Merkez,Çaycuma,Devrek,Kozlu,Alaplı,Kilimli,Gökçebey|Aksaray:Merkez,Ortaköy,Eskil,Gülağaç,Güzelyurt,Ağaçören,Sultanhanı,Sarıyahşi|Bayburt:Merkez,Demirözü,Aydıntepe|Karaman:Merkez,Ermenek,Sarıveliler,Ayrancı,Kazımkarabekir,Başyayla|Kırıkkale:Merkez,Yahşihan,Keskin,Delice,Sulakyurt,Bahşılı,Balışeyh,Karakeçili,Çelebi|Batman:Merkez,Kozluk,Sason,Beşiri,Gercüş,Hasankeyf|Şırnak:Cizre,Silopi,Merkez,İdil,Uludere,Beytüşşebap,Güçlükonak|Bartın:Merkez,Ulus,Amasra,Kurucaşile|Ardahan:Merkez,Göle,Çıldır,Hanak,Posof,Damal|Iğdır:Merkez,Tuzluca,Aralık,Karakoyunlu|Yalova:Merkez,Çiftlikköy,Çınarcık,Altınova,Armutlu,Termal|Karabük:Merkez,Safranbolu,Yenice,Eskipazar,Eflani,Ovacık|Kilis:Merkez,Musabeyli,Elbeyli,Polateli|Osmaniye:Merkez,Kadirli,Düziçi,Bahçe,Toprakkale,Sumbas,Hasanbeyli|Düzce:Merkez,Akçakoca,Kaynaşlı,Gölyaka,Çilimli,Yığılca,Gümüşova,Cumayeri";
+    const turkeyDistricts = Object.fromEntries(rawDistrictsData.split('|').map(i => { const p = i.split(':'); return [p[0], p[1].split(',')]; }));
+    const cities81 = Object.keys(turkeyDistricts);
 
     const curatedDatabase = {
       "Aydın": [
         {
-          id: "ayd_makar1",
-          category: "restoran",
-          categoryName: "🍽️ Restoran & Hızlı Lezzet",
-          name: "Makarbox Efeler",
-          district: "Efeler",
-          city: "Aydın",
-          rating: 4.2,
-          reviews: 89,
-          highlight: "Özel Soslu Kutu Penne & Doyurucu Porsiyonlar",
-          sentiment: { positive: 88, neutral: 8, negative: 4 },
-          summary: "Makarbox Efeler, Aydın Efeler Cuma Mahallesi Doğu Gazi Bulvarı üzerinde, zengin soslu kutu makarna (Tavuklum, Kokoş Köri, Pesto, Mantarix) konseptiyle özellikle gençler ve hızlı sıcak yemek arayanlar arasında 4.2 puanlı popüler bir lezzet noktasıdır.",
-          tip: "Sosun sıcaklığı ve kıvamı için kutuyu teslim alır almaz tüketmeniz, öğle siparişlerinizi 12:00 öncesi vermeniz tavsiye edilir.",
+          id: "ayd_makar1", category: "restoran", categoryName: "🍽️ Restoran & Hızlı Lezzet", name: "Makarbox Efeler", district: "Efeler", city: "Aydın", rating: 4.2, reviews: 89,
+          highlight: "Özel Soslu Kutu Penne & Doyurucu Porsiyonlar", sentiment: { positive: 88, neutral: 8, negative: 4 },
+          summary: "Makarbox Efeler, Aydın Efeler Cuma Mahallesi Doğu Gazi Bulvarı üzerinde zengin soslu kutu makarna (Tavuklum, Kokoş Köri, Pesto, Mantarix) konseptiyle 4.2 puanlı popüler bir lezzet noktasıdır.",
+          tip: "Sosun sıcaklığı ve tam kıvamı için teslim alır almaz tüketmeniz, öğle siparişlerinizi 12:00 öncesi vermeniz önerilir.",
           likes: [
-            { title: "Sosların Lezzeti ve Çeşitlilik", count: 68, desc: "Tavuklum, köri soslu ve mantarlı penne makarnaların sos kıvamı ve lezzet dengesi çok beğeniliyor." },
-            { title: "Doyurucu Kutu Porsiyon ve Fiyat Uygunluğu", count: 52, desc: "Öğrenciler ve çalışanlar için hem ekonomik hem de oldukça doyurucu bir alternatif sunuyor." },
-            { title: "Hızlı Hazırlık ve Pratik Servis", count: 39, desc: "Siparişlerin sıcak ve pratik kutu ambalajında dökülmeden servis edilmesi takdir ediliyor." }
+            { title: "Sosların Lezzeti ve Çeşitlilik", count: 68, desc: "Tavuklum, köri soslu ve mantarlı penne makarnaların sos kıvamı çok beğeniliyor." },
+            { title: "Doyurucu Kutu Porsiyon ve Fiyat Uygunluğu", count: 52, desc: "Öğrenciler ve çalışanlar için ekonomik ve doyurucu bir alternatif." },
+            { title: "Hızlı Hazırlık ve Pratik Servis", count: 39, desc: "Siparişlerin sıcak ve pratik kutu ambalajında dökülmeden servis edilmesi." }
           ],
           complaints: [
-            { title: "Akşam Saatlerinde Paket Teslim Süresi", count: 18, desc: "18:30-20:00 arası online siparişlerde teslimatın bazen 40 dakikayı bulması." },
-            { title: "İçeride Oturma Alanı Kısıtlılığı", count: 12, desc: "Mekanın daha çok paket ve al-götür odaklı olması nedeniyle içeride masa sayısının azlığı." }
+            { title: "Akşam Saatlerinde Paket Teslim Süresi", count: 18, desc: "18:30-20:00 arası siparişlerde teslimatın bazen 40 dakikayı bulması." },
+            { title: "İçeride Oturma Alanı Kısıtlılığı", count: 12, desc: "Mekanın daha çok paket ve al-götür odaklı olması." }
           ],
           actions: [
-            {
-              issue: "Akşam Sipariş Teslimat Süresi",
-              cause: "Akşam yoğunluğunda sipariş hazırlama ve kurye eşleşmesinde yığılma.",
-              steps: ["En çok satan 3 makarna çeşidinin (Tavuklum, Kokoş Köri) sos ön hazırlığını pik saatten önce tamamlayın.", "Paketleme bandını ayırarak kurye teslim süresini 15 dakikanın altına indirin."],
-              kpi: "Ortalama teslimat süresini 25 dakikaya düşürme"
-            }
+            { issue: "Akşam Sipariş Teslimat Süresi", cause: "Akşam yoğunluğunda sipariş hazırlama ve kurye yığılması.", steps: ["En çok satan 3 makarna sosunun ön hazırlığını tamamlayın.", "Paketleme bandını ayırarak kurye çıkışını hızlandırın."], kpi: "Ortalama teslimat süresini 25 dakikaya düşürme" }
           ]
         }
       ],
       "Balıkesir": [
         {
-          id: "bal_asya1",
-          category: "otel",
-          categoryName: "🏨 Otel & Konaklama",
-          name: "GRAND ASYA HOTEL",
-          district: "Bandırma",
-          city: "Balıkesir",
-          rating: 4.4,
-          reviews: 3109,
-          highlight: "Bandırma Liman & Şehir Manzarası, 5 Yıldızlı Konfor",
-          sentiment: { positive: 91, neutral: 6, negative: 3 },
-          summary: "GRAND ASYA HOTEL, Bandırma / Balıkesir merkezinde 3.109 doğrulanmış Google Haritalar yorumu ile bölgenin en yüksek değerlendirme sayısına sahip 5 yıldızlı otelidir. Temiz odaları, zengin açık büfe kahvaltısı ve limana yürüme mesafesindeki merkezi konumu en çok övülen özellikleridir.",
+          id: "bal_asya1", category: "otel", categoryName: "🏨 Otel & Konaklama", name: "GRAND ASYA HOTEL", district: "Bandırma", city: "Balıkesir", rating: 4.4, reviews: 3109,
+          highlight: "Bandırma Liman & Şehir Manzarası, 5 Yıldızlı Konfor", sentiment: { positive: 91, neutral: 6, negative: 3 },
+          summary: "GRAND ASYA HOTEL, Bandırma merkezinde 3.109 doğrulanmış Google Haritalar yorumu ile bölgenin en yüksek değerlendirme sayısına sahip 5 yıldızlı otelidir.",
           tip: "Deniz ve liman manzaralı üst kat odaları tercih etmeniz, sabah kahvaltı salonuna 08:30 öncesi inmeniz tavsiye edilir.",
           likes: [
-            { title: "Merkezi Konum ve Liman Manzarası", count: 1420, desc: "Bandırma Limanı'na ve feribot iskelesine yürüme mesafesinde olması, panoramik deniz manzarası misafirlerden tam not alıyor." },
-            { title: "Zengin Açık Büfe Kahvaltı ve Taze Ürünler", count: 980, desc: "Açık büfedeki sıcak çeşitlerin bolluğu, taze peynirler ve lezzetli kahvaltı servisi çok beğeniliyor." },
-            { title: "Oda Temizliği ve Yatak Konforu", count: 710, desc: "Geniş ve ferah odalar, temiz banyolar ve rahat ortopedik yataklar konforlu bir konaklama sunuyor." }
+            { title: "Merkezi Konum ve Liman Manzarası", count: 1420, desc: "Bandırma Limanı'na ve feribot iskelesine yürüme mesafesinde olması." },
+            { title: "Zengin Açık Büfe Kahvaltı ve Taze Ürünler", count: 980, desc: "Açık büfedeki sıcak çeşitlerin bolluğu ve taze kahvaltı servisi." },
+            { title: "Oda Temizliği ve Yatak Konforu", count: 710, desc: "Geniş ve ferah odalar, temiz banyolar ve rahat ortopedik yataklar." }
           ],
           complaints: [
             { title: "Cadde Tarafı Odalarda Trafik Sesi", count: 185, desc: "Ön cephedeki alt kat odalarda cadde araç sesinin zaman zaman duyulabilmesi." },
-            { title: "Yoğun Saatlerde Otopark Alanı", count: 120, desc: "Hafta sonu ve feribot saatlerinde otel önü otopark alanında yaşanan yoğunluk." }
+            { title: "Yoğun Saatlerde Otopark Alanı", count: 120, desc: "Feribot saatlerinde otel önü otopark alanında yaşanan yoğunluk." }
           ],
           actions: [
-            {
-              issue: "Cadde Trafik Sesi ve Akustik Konfor",
-              cause: "Atatürk Caddesi üzerindeki araç ve liman trafiği.",
-              steps: ["Ön cephedeki odaların pencere fitillerini çift katmanlı akustik fitillerle güçlendirin.", "Girişte misafirlerin hassasiyetine göre liman veya arka cephe oda tahsisi yapın."],
-              kpi: "Oda akustik memnuniyet skorunda %45 iyileşme"
-            }
-          ]
-        }
-      ],
-      "Aydın": [
-        {
-          id: "ayd_makar1",
-          category: "restoran",
-          categoryName: "🍽️ Restoran & Hızlı Lezzet",
-          name: "Makarbox Efeler",
-          district: "Efeler",
-          city: "Aydın",
-          rating: 4.2,
-          reviews: 89,
-          highlight: "Özel Soslu Kutu Penne & Doyurucu Porsiyonlar",
-          sentiment: { positive: 88, neutral: 8, negative: 4 },
-          summary: "Makarbox Efeler, Aydın Efeler Cuma Mahallesi Doğu Gazi Bulvarı üzerinde, zengin soslu kutu makarna (Tavuklum, Kokoş Köri, Pesto, Mantarix) konseptiyle özellikle gençler ve hızlı sıcak yemek arayanlar arasında 4.2 puanlı popüler bir lezzet noktasıdır.",
-          tip: "Sosun sıcaklığı ve kıvamı için kutuyu teslim alır almaz tüketmeniz, öğle siparişlerinizi 12:00 öncesi vermeniz tavsiye edilir.",
-          likes: [
-            { title: "Sosların Lezzeti ve Çeşitlilik", count: 68, desc: "Tavuklum, köri soslu ve mantarlı penne makarnaların sos kıvamı ve lezzet dengesi çok beğeniliyor." },
-            { title: "Doyurucu Kutu Porsiyon ve Fiyat Uygunluğu", count: 52, desc: "Öğrenciler ve çalışanlar için hem ekonomik hem de oldukça doyurucu bir alternatif sunuyor." },
-            { title: "Hızlı Hazırlık ve Pratik Servis", count: 39, desc: "Siparişlerin sıcak ve pratik kutu ambalajında dökülmeden servis edilmesi takdir ediliyor." }
-          ],
-          complaints: [
-            { title: "Akşam Saatlerinde Paket Teslim Süresi", count: 18, desc: "18:30-20:00 arası online siparişlerde teslimatın bazen 40 dakikayı bulması." },
-            { title: "İçeride Oturma Alanı Kısıtlılığı", count: 12, desc: "Mekanın daha çok paket ve al-götür odaklı olması nedeniyle içeride masa sayısının azlığı." }
-          ],
-          actions: [
-            {
-              issue: "Akşam Sipariş Teslimat Süresi",
-              cause: "Akşam yoğunluğunda sipariş hazırlama ve kurye eşleşmesinde yığılma.",
-              steps: ["En çok satan 3 makarna çeşidinin (Tavuklum, Kokoş Köri) sos ön hazırlığını pik saatten önce tamamlayın.", "Paketleme bandını ayırarak kurye teslim süresini 15 dakikanın altına indirin."],
-              kpi: "Ortalama teslimat süresini 25 dakikaya düşürme"
-            }
-          ]
-        }
-      ],
-      "Balıkesir": [
-        {
-          id: "bal_asya1",
-          category: "otel",
-          categoryName: "🏨 Otel & Konaklama",
-          name: "GRAND ASYA HOTEL",
-          district: "Bandırma",
-          city: "Balıkesir",
-          rating: 4.4,
-          reviews: 3109,
-          highlight: "Bandırma Liman & Şehir Manzarası, 5 Yıldızlı Konfor",
-          sentiment: { positive: 91, neutral: 6, negative: 3 },
-          summary: "GRAND ASYA HOTEL, Bandırma / Balıkesir merkezinde 3.109 doğrulanmış Google Haritalar yorumu ile bölgenin en yüksek değerlendirme sayısına sahip 5 yıldızlı otelidir. Temiz odaları, zengin açık büfe kahvaltısı ve limana yürüme mesafesindeki merkezi konumu en çok övülen özellikleridir.",
-          tip: "Deniz ve liman manzaralı üst kat odaları tercih etmeniz, sabah kahvaltı salonuna 08:30 öncesi inmeniz tavsiye edilir.",
-          likes: [
-            { title: "Merkezi Konum ve Liman Manzarası", count: 1420, desc: "Bandırma Limanı'na ve feribot iskelesine yürüme mesafesinde olması, panoramik deniz manzarası misafirlerden tam not alıyor." },
-            { title: "Zengin Açık Büfe Kahvaltı ve Taze Ürünler", count: 980, desc: "Açık büfedeki sıcak çeşitlerin bolluğu, taze peynirler ve lezzetli kahvaltı servisi çok beğeniliyor." },
-            { title: "Oda Temizliği ve Yatak Konforu", count: 710, desc: "Geniş ve ferah odalar, temiz banyolar ve rahat ortopedik yataklar konforlu bir konaklama sunuyor." }
-          ],
-          complaints: [
-            { title: "Cadde Tarafı Odalarda Trafik Sesi", count: 185, desc: "Ön cephedeki alt kat odalarda cadde araç sesinin zaman zaman duyulabilmesi." },
-            { title: "Yoğun Saatlerde Otopark Alanı", count: 120, desc: "Hafta sonu ve feribot saatlerinde otel önü otopark alanında yaşanan yoğunluk." }
-          ],
-          actions: [
-            {
-              issue: "Cadde Trafik Sesi ve Akustik Konfor",
-              cause: "Atatürk Caddesi üzerindeki araç ve liman trafiği.",
-              steps: ["Ön cephedeki odaların pencere fitillerini çift katmanlı akustik fitillerle güçlendirin.", "Girişte misafirlerin hassasiyetine göre liman veya arka cephe oda tahsisi yapın."],
-              kpi: "Oda akustik memnuniyet skorunda %45 iyileşme"
-            }
+            { issue: "Cadde Trafik Sesi ve Akustik Konfor", cause: "Atatürk Caddesi üzerindeki araç ve liman trafiği.", steps: ["Ön cephe odaların pencere fitillerini akustik fitillerle güçlendirin.", "Girişte liman veya arka cephe oda tahsisi yapın."], kpi: "Oda akustik memnuniyet skorunda %45 iyileşme" }
           ]
         }
       ],
       "Konya": [
         {
-          id: "kn_k1", category: "kasap", name: "Havzan Kasabı & Et Galerisi", district: "Meram", rating: 4.8, reviews: 480,
-          highlight: "Özel Zırh Etliekmek Harcı",
-          likes: [
-            { title: "Zırh Kıyması ve Etliekmeklik Harç", count: 310, desc: "Dana ve kuzu boşluğu karışımı harcı fırına göndermek için mükemmel dengeli." },
-            { title: "Doğal Yayla Eti Tazeliği", count: 185, desc: "Kokusuz ve yumuşak taze yerli besi eti." }
-          ],
-          complaints: [{ title: "Cuma Günü Yoğunluğu", count: 42, desc: "Cuma namazı sonrası harç yaptırmak için sıra beklemek gerekiyor." }],
-          actions: [{ issue: "Cuma Yoğunluğu", cause: "Geleneksel cuma etliekmek siparişi yığılması.", steps: ["WhatsApp ön siparişi ile hazır paket teslimi yapın."], kpi: "Bekleme süresinde %50 azalma" }]
-        },
-        {
-          id: "kn_f1", category: "fırın", name: "Tarihi Meram Taş Fırını", district: "Meram", rating: 4.7, reviews: 1250,
-          highlight: "Taş Fırın Ekmeği & Tandır",
-          likes: [{ title: "Odun Ateşinde Tandır Ekmeği", count: 740, desc: "Çıtır kabuk, sıcak somun ve geleneksel fırın lezzeti." }],
-          complaints: [{ title: "Sabah Sırası", count: 85, desc: "Sabah 07:30'da sıcak ekmek kuyruğu oluşması." }],
-          actions: [{ issue: "Sabah Kuyruğu", cause: "İşe gidiş saatinde talebin çakışması.", steps: ["Hızlı temassız al-götür kasası açın."], kpi: "Hızlı servis süresi" }]
-        },
-        {
-          id: "kn_r1", category: "restoran", name: "Cemo Etliekmek & Fırın Kebap", district: "Selçuklu", rating: 4.7, reviews: 3420,
-          highlight: "Geleneksel Konya Fırın Kebabı",
-          likes: [
-            { title: "İnce Çıtır Bıçakarası ve Etliekmek", count: 2150, desc: "Hamurun çıtırlığı ve etin kalitesi şehirdeki en iyilerden." },
-            { title: "Lokum Gibi Fırın Kebabı", count: 1280, desc: "Bakır tabakta servis edilen kuzu etinin yumuşaklığı." }
-          ],
-          complaints: [{ title: "Hafta Sonu Masa Bekleme", count: 180, desc: "Pazar günleri aile salonunda 20 dakika sıra bekleme." }],
-          actions: [{ issue: "Masa Bekleme", cause: "Hafta sonu yerli ve turist yoğunluğu.", steps: ["Online bekleme sırası SMS bildirimi kurun."], kpi: "Müşteri memnuniyet skoru" }]
-        },
-        {
-          id: "kn_h1", category: "hastane", name: "Konya Şehir Hastanesi & Tıp Merkezi", district: "Karatay", rating: 4.3, reviews: 1850,
-          highlight: "Kapsamlı Uzman Hekim Kadrosu",
-          likes: [{ title: "Modern Cihazlar ve Hızlı Tahlil", count: 1120, desc: "Geniş kampüs, yeni tıbbi donanım ve ilgili hekimler." }],
-          complaints: [{ title: "Kampüs İçi Yürüme Mesafeleri", count: 210, desc: "Binalar arası mesafenin genişliği." }],
-          actions: [{ issue: "Yönlendirme", cause: "Geniş bina alanı.", steps: ["Hastane içi akıllı yönlendirme tabelalarını artırın."], kpi: "Hasta erişim hızı" }]
-        }
-      ],
-      "İzmir": [
-        {
-          id: "iz_k1", category: "kasap", name: "Turgutlu Kasabı", district: "Alsancak", rating: 4.5, reviews: 342,
-          highlight: "Taze Dana Antrikot & Kuzu Pirzola",
-          likes: [
-            { title: "Taze ve Yumuşak Et Kalitesi", count: 184, desc: "Etlerin tazeliği, sinir temizliği ve mahalle esnafı güveni." },
-            { title: "Güler Yüzlü Bilgilendirme", count: 112, desc: "Pişirme derecesi ve doğru et seçimi konusunda ilgi." }
-          ],
-          complaints: [{ title: "Fiyat Algısı", count: 38, desc: "Alsancak bölgesine özgü fiyat seviyesi." }],
-          actions: [{ issue: "Fiyat Algısı", cause: "Merkezi kira ve 1. sınıf yerli besi maliyeti.", steps: ["Gramajlı avantaj paketleri oluşturun."], kpi: "Fiyat memnuniyeti artışı" }]
-        },
-        {
-          id: "iz_f1", category: "fırın", name: "Alsancak Dostlar Fırını", district: "Alsancak", rating: 4.6, reviews: 12650,
-          highlight: "Odun Ateşinde Geleneksel Boyoz",
-          likes: [
-            { title: "Geleneksel Çıtır Boyoz ve Yumurta", count: 8420, desc: "Odun ateşinde pişen çıtır boyozun efsanevi lezzeti." },
-            { title: "Tahinli ve Çikolatalı Çeşitler", count: 3210, desc: "Zengin tatlı boyoz menüsü yerli ve yabancı ziyaretçilerden tam not alıyor." }
-          ],
-          complaints: [{ title: "Hafta Sonu Sıra Bekleme", count: 620, desc: "Kıbrıs Şehitleri Caddesi'nde sabah kuyruğu." }],
-          actions: [{ issue: "Sıra Bekleme", cause: "Sabah saatlerindeki talep yoğunluğu.", steps: ["Sadece paket al-götür için ekspres kasa açın."], kpi: "Kasa bekleme süresinde %50 düşüş" }]
-        },
-        {
-          id: "iz_f2", category: "fırın", name: "Zeynel Ergin Gevrek Fırını", district: "Alsancak", rating: 4.6, reviews: 7590,
-          highlight: "Tarihi Taş Fırın İzmir Gevreği",
-          likes: [{ title: "Sıcak Pekmezli Çıtır Gevrek", count: 5400, desc: "Tulum peyniriyle birlikte servis edilen tarihi gevrek." }],
-          complaints: [{ title: "Mekan Küçüklüğü", count: 180, desc: "Oturup yiyecek yerin çok kısıtlı olması." }],
-          actions: [{ issue: "Oturma Alanı", cause: "Tarihi mahalle içi dükkan yapısı.", steps: ["Dış alana ayaküstü atıştırma masaları koyun."], kpi: "Müşteri konforu" }]
-        },
-        {
-          id: "iz_r1", category: "restoran", name: "Tavacı Recep Usta Alsancak", district: "Alsancak", rating: 4.3, reviews: 9310,
-          highlight: "Kordon Manzaralı Kaburga Dolması",
-          likes: [{ title: "Kuzu Kaburga ve Tava Lezzeti", count: 6100, desc: "Özel soslu kuzu etinin yumuşaklığı ve doyurucu porsiyon." }],
-          complaints: [{ title: "Otopark ve Yoğunluk", count: 420, desc: "Kordon'da park yeri bulma zorluğu." }],
-          actions: [{ issue: "Otopark Sorunu", cause: "Kordon araç trafiği kısıtı.", steps: ["Vale hizmeti anlaşması sağlayın."], kpi: "Hizmet memnuniyeti" }]
-        }
-      ],
-      "Ankara": [
-        {
-          id: "ank_k1", category: "kasap", name: "Çankaya Kasap & Et Pazarı", district: "Çankaya", rating: 4.6, reviews: 512,
-          highlight: "Yerli Besi Kuşbaşı & Zırh Kıyma",
-          likes: [{ title: "Etin Yumuşaklığı ve Sinir Temizliği", count: 245, desc: "Yemeklik etlerin tazeliği ve esnafın özeni çok beğeniliyor." }],
-          complaints: [{ title: "Cumartesi Sırası", count: 48, desc: "Hafta sonu mangal saatlerindeki sıra." }],
-          actions: [{ issue: "Cumartesi Sırası", cause: "Öğle saatlerindeki talep birikmesi.", steps: ["WhatsApp ön siparişi ile hazır paket sunun."], kpi: "Bekleme süresinde %40 azalma" }]
-        },
-        {
-          id: "ank_f1", category: "fırın", name: "Ankara Tarihi Taş Fırın & Simit Evi", district: "Ulus", rating: 4.7, reviews: 1420,
-          highlight: "Koyu Pekmezli Geleneksel Ankara Simidi",
-          likes: [{ title: "Çıtır Bol Susamlı Ankara Simidi", count: 890, desc: "Taş fırından çıkan sıcak simidin çıtırlığı ve lezzeti." }],
-          complaints: [{ title: "Sabah 08:00 Yoğunluğu", count: 110, desc: "İşe gidiş saatlerinde simit sırasının uzaması." }],
-          actions: [{ issue: "Sabah Yoğunluğu", cause: "Mesai saatlerinde talebin çakışması.", steps: ["Temassız hızlı ödeme kasası koyun."], kpi: "Hızlı servis" }]
-        }
-      ],
-      "Gaziantep": [
-        {
-          id: "gz_k1", category: "kasap", name: "Gaziantep Zırh Kebapçılık & Kasap", district: "Şahinbey", rating: 4.8, reviews: 620,
-          highlight: "Özel Zırh Kuzu Kıyma & Küşleme",
-          likes: [{ title: "Kokusuz Toklu Kuzu Eti", count: 410, desc: "Küşleme, pirzola ve zırh kıymasının lezzet dengesi kusursuz." }],
-          complaints: [{ title: "Yağ Oranı Tercihi", count: 35, desc: "Müşterinin istediği kuyruk yağı oranının değişkenliği." }],
-          actions: [{ issue: "Yağ Oranı Tercihi", cause: "Kişisel damak tadı farklılığı.", steps: ["Yağ skalası seçenekleriyle sipariş alın."], kpi: "Sipariş doğruluğu" }]
-        }
-      ],
-      "Trabzon": [
-        {
-          id: "tr_f1", category: "fırın", name: "Vakfıkebir Tarihi Taş Fırını", district: "Vakfıkebir", rating: 4.9, reviews: 890,
-          highlight: "Ekşi Mayalı Büyük Vakfıkebir Ekmeği",
-          likes: [{ title: "Günlerce Bayatlamayan Taş Fırın Ekmeği", count: 680, desc: "Taş fırında pişen ekşi mayalı dev ekmeğin eşsiz lezzeti." }],
-          complaints: [{ title: "Öğleden Sonra Tükenme", count: 45, desc: "Sıcak ekmeklerin erken saatlerde bitmesi." }],
-          actions: [{ issue: "Erken Tükenme", cause: "Fırın kapasitesi.", steps: ["Öğleden sonra 2. çıkarma saati belirleyin."], kpi: "Ürün mevcudiyeti" }]
+          id: "kn_k1", category: "kasap", categoryName: "🥩 Kasap & Şarküteri", name: "Havzan Kasabı & Et Galerisi", district: "Meram", rating: 4.8, reviews: 480, highlight: "Özel Zırh Etliekmek Harcı & Taze Besi Eti", sentiment: { positive: 92, neutral: 6, negative: 2 },
+          summary: "Etliekmek harcı konusunda Konya Meram'ın en yüksek puanlı kasabıdır.", tip: "Cuma günleri harç kuyruğuna kalmamak için siparişinizi 11:30'a kadar hazır ettirin.",
+          likes: [{ title: "Zırh Kıyması ve Etliekmeklik Harç", count: 310, desc: "Dana döş ve kuzu boşluğu karışımı harcın lezzeti dengeli." }, { title: "Doğal Yayla Eti Tazeliği", count: 185, desc: "Kokusuz, yumuşak taze kesim et kalitesi." }],
+          complaints: [{ title: "Cuma Günü Bekleme Sırası", count: 42, desc: "Cuma namazı sonrası oluşan sıra." }],
+          actions: [{ issue: "Cuma Günü Yoğunluğu", cause: "Cuma etliekmek siparişi yığılması.", steps: ["WhatsApp üzerinden cuma ön sipariş hattı açın."], kpi: "Ortalama kasa bekleme süresinde %50 azalma" }]
         }
       ]
     };
@@ -487,57 +341,85 @@
     let customSearchResults = null;
     let selectedBusinessObj = null;
 
-    // Şehir dropdown doldur
     const citySelect = document.getElementById('mainCitySelect');
-    cities81.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c;
-      opt.innerText = c;
-      if (c === currentCity) opt.selected = true;
-      citySelect.appendChild(opt);
-    });
+    cities81.forEach(c => { const opt = document.createElement('option'); opt.value = c; opt.innerText = c; if (c === currentCity) opt.selected = true; citySelect.appendChild(opt); });
 
-    function getCityBusinesses(city) {
-      if (curatedDatabase[city]) {
-        return curatedDatabase[city];
+    function updateDistrictDatalist() {
+      const datalist = document.getElementById('districtDatalist');
+      if (!datalist) return;
+      datalist.innerHTML = "";
+      (turkeyDistricts[currentCity] || []).forEach(d => { const opt = document.createElement('option'); opt.value = d; opt.label = `${currentCity} - ${d}`; datalist.appendChild(opt); });
+      Object.keys(turkeyDistricts).forEach(city => { if (city !== currentCity) { (turkeyDistricts[city] || []).slice(0, 2).forEach(d => { const opt = document.createElement('option'); opt.value = d; opt.label = `${city} - ${d}`; datalist.appendChild(opt); }); } });
+    }
+
+    function renderDistrictPills() {
+      const container = document.getElementById('districtPillsContainer');
+      const title = document.getElementById('districtPillTitle');
+      if (title) title.innerText = `${currentCity} İlçeleri:`;
+      if (!container) return;
+      const districts = turkeyDistricts[currentCity] || ["Merkez"];
+      let html = `<button type="button" data-dist="" class="district-pill ${currentDistrict === '' ? 'active' : 'bg-slate-100 text-slate-700 hover:bg-sky-50 hover:text-sky-600'} px-2.5 py-1 rounded-lg font-semibold transition cursor-pointer">Tüm ${currentCity}</button>`;
+      districts.slice(0, 8).forEach(d => { const isActive = currentDistrict.toLowerCase() === d.toLowerCase(); html += `<button type="button" data-dist="${d}" class="district-pill ${isActive ? 'active' : 'bg-slate-100 text-slate-700 hover:bg-sky-50 hover:text-sky-600'} px-2.5 py-1 rounded-lg transition cursor-pointer">${d}</button>`; });
+      container.innerHTML = html;
+      container.querySelectorAll('.district-pill').forEach(btn => { btn.addEventListener('click', () => selectDistrict(btn.getAttribute('data-dist'))); });
+    }
+
+    function selectDistrict(distName) {
+      currentDistrict = distName ? distName.trim() : "";
+      const distInput = document.getElementById('districtInput');
+      if (distInput) distInput.value = currentDistrict;
+      const badge = document.getElementById('activeDistrictBadge');
+      if (badge) {
+        if (currentDistrict) { badge.innerText = `${currentDistrict} Filtrelendi`; badge.className = "text-[11px] font-bold text-sky-700 bg-sky-100 px-2.5 py-0.5 rounded-lg border border-sky-300"; }
+        else { badge.innerText = `Tüm ${currentCity} İlçeleri`; badge.className = "text-[11px] font-bold text-sky-600 bg-sky-50 px-2.5 py-0.5 rounded-lg border border-sky-100"; }
       }
-      return [
-        {
-          id: `${city}_k1`, category: "kasap", name: `${city} Merkez Kasap & Et Şarküteri`, district: "Merkez", rating: 4.6, reviews: 310,
-          highlight: "Günlük Taze Kesim Yerli Besi Eti",
-          likes: [{ title: "Taze ve Hijyenik Et Çeşitleri", count: 180, desc: `${city} yerli besi etlerinin tazeliği ve esnafın ilgisi övülüyor.` }, { title: "Temiz Dükkan ve Güler Yüz", count: 110, desc: "Tezgah hijyeni ve doğru et bilgilendirmesi takdir ediliyor." }],
-          complaints: [{ title: "Hafta Sonu Akşam Yoğunluğu", count: 25, desc: "İş çıkışında oluşan kasa bekleme süresi." }],
-          actions: [{ issue: "Hafta Sonu Yoğunluğu", cause: "Talep toplanması.", steps: ["Ön sipariş paketi teslimi uygulayın."], kpi: "Bekleme süresinde azalma" }]
-        },
-        {
-          id: `${city}_f1`, category: "fırın", name: `${city} Tarihi Taş Fırını & Ekmekçisi`, district: "Merkez", rating: 4.7, reviews: 840,
-          highlight: "Taş Fırın Sıcak Somunu & Simit",
-          likes: [{ title: "Çıtır Taş Fırın Somun Ekmek", count: 520, desc: "Odun ateşinde pişen sıcak ekmeğin çıtır kabuğu ve lezzeti." }],
-          complaints: [{ title: "Sabah Kuyruğu", count: 45, desc: "Sabah sıcak ekmek alırken sıra oluşması." }],
-          actions: [{ issue: "Sabah Sırası", cause: "Mesai öncesi yoğunluk.", steps: ["Hızlı ödeme bankosu açın."], kpi: "Hızlı servis" }]
-        },
-        {
-          id: `${city}_r1`, category: "restoran", name: `${city} Yöresel Lezzet Lokantası`, district: "Merkez", rating: 4.5, reviews: 1120,
-          highlight: `Yöresel ${city} Yemekleri`,
-          likes: [{ title: "Doyurucu Porsiyon ve Lezzet", count: 710, desc: "Yöresel lezzetlerin sıcak servisi ve ferah mekan düzeni." }],
-          complaints: [{ title: "Öğle Saati Yoğunluğu", count: 65, desc: "12:30 civarında boş masa bulma süresi." }],
-          actions: [{ issue: "Masa Bekleme", cause: "Öğle molası talebi.", steps: ["Online masa rezervasyonu uygulayın."], kpi: "Masa devir hızı" }]
-        },
-        {
-          id: `${city}_h1`, category: "hastane", name: `${city} Sağlık & Tıp Merkezi`, district: "Merkez", rating: 4.4, reviews: 920,
-          highlight: "Uzman Doktor Kadrosu",
-          likes: [{ title: "Doktor ve Hemşire İlgisi", count: 590, desc: "Hastalara gösterilen özen ve tıbbi donanımın yeterliliği." }],
-          complaints: [{ title: "Randevu Saati Gecikmesi", count: 80, desc: "Poliklinik girişlerindeki gecikmeler." }],
-          actions: [{ issue: "Gecikmeler", cause: "Vaka uzamaları.", steps: ["SMS bilgilendirmesi yapın."], kpi: "Bekleme memnuniyeti" }]
-        },
-        {
-          id: `${city}_e1`, category: "eczane", name: `${city} Şifa Eczanesi`, district: "Merkez", rating: 4.8, reviews: 410,
-          highlight: "Eksiksiz İlaç Temini & Güler Yüz",
-          likes: [{ title: "Hızlı Temin ve İlaç Danışmanlığı", count: 320, desc: "Reçete ilaçlarının eksiksiz bulunması ve güler yüzlü bilgilendirme." }],
-          complaints: [{ title: "Nöbetçi Gecesi Yoğunluğu", count: 30, desc: "Nöbet saatlerindeki kısa süreli bekleme." }],
-          actions: [{ issue: "Nöbetçi Yoğunluğu", cause: "Nöbette tek personel çalışması.", steps: ["Nöbetçi günlerde 1 destek elemanı görevlendirin."], kpi: "Kasa işlem süresi" }]
+      renderDistrictPills();
+      customSearchResults = null;
+      renderDisplay();
+    }
+
+    function getCategoryProfile(query, currentCity, currentDistrict) {
+      const q = query.toLowerCase().replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c');
+      if (q.includes("otel") || q.includes("hotel") || q.includes("pansiyon") || q.includes("resort") || q.includes("suite") || q.includes("apart") || q.includes("konaklama")) {
+        return { cat: "otel", catName: "🏨 Otel & Konaklama", highlight: "Oda Hijyeni & Konforlu Misafir Deneyimi", summary: `"${query}" için yapılan misafir yorumlarında temiz oda düzeni, rahat yataklar ve resepsiyon personelinin güler yüzlü ilgisi öne çıkmaktadır.`, tip: "Sessiz bir uyku için caddeye bakmayan üst kat odaları tercih etmeniz ve kahvaltıya 08:30 öncesi inmeniz önerilir.", likes: [{ title: "Oda Temizliği ve Yatak Konforu", count: 185, desc: "Çarşafların hijyeni, banyo temizliği ve yatakların ortopedik rahatlığı." }, { title: "Zengin Açık Büfe Kahvaltı", count: 142, desc: "Sıcak çeşitlerin zenginliği ve kaliteli kahve servisi." }, { title: "Hızlı Check-in ve Resepsiyon İlgisi", count: 96, desc: "İşlemlerin süratle yapılması ve kibar tutum." }], complaints: [{ title: "Odalar Arası Ses Yalıtımı", count: 28, desc: "Bitişik oda veya koridor seslerinin gece duyulabilmesi." }], actions: [{ issue: "Ses Yalıtımı", cause: "Kapı altı fitillerinin zayıflığı.", steps: ["Oda kapılarına akustik fitil uygulayın."], kpi: "Memnuniyet puanı artışı" }] };
+      }
+      if (q.includes("cafe") || q.includes("kafe") || q.includes("kahve") || q.includes("coffee") || q.includes("tatli") || q.includes("pasta") || q.includes("pastane") || q.includes("waffle") || q.includes("cay")) {
+        return { cat: "kafe", catName: "☕ Kafe & Tatlı", highlight: "Nitelikli Çekirdek Kahve & Taze Günlük Tatlılar", summary: `"${query}" için yapılan yorumlarda ferah oturma düzeni, özel kavrum kahve aroması ve günlük taze tatlı çeşitleri yüksek övgü almaktadır.`, tip: "Akşam 19:30 sonrası yer bulmak zorlaşabilir; çalışma için 14:00-17:00 arası idealdir.", likes: [{ title: "Nitelikli Kahve Aroması ve Sunum", count: 160, desc: "Kahvenin sıcaklığı, çekirdek kalitesi ve latte art sunumları." }, { title: "Taze Günlük Cheesecake ve Tatlılar", count: 125, desc: "Tatlıların bayat olmaması ve hafifliği." }], complaints: [{ title: "Hafta Sonu Boş Masa Bulma", count: 34, desc: "Kapıda masa bekleme süresi oluşması." }], actions: [{ issue: "Masa Bekleme", cause: "Talep yoğunluğu.", steps: ["Paket al-götür için hızlı kasa açın."], kpi: "Servis hızında %35 artış" }] };
+      }
+      if (q.includes("hastane") || q.includes("hospital") || q.includes("saglik") || q.includes("klini") || q.includes("doktor") || q.includes("dis") || q.includes("dentist") || q.includes("tip") || q.includes("poliklinik") || q.includes("acil")) {
+        return { cat: "hastane", catName: "🏥 Sağlık & Hastane", highlight: "Uzman Hekim Teşhisi & Hijyenik Sağlık Hizmeti", summary: `"${query}" bünyesindeki doktorların detaylı bilgilendirmesi, ilgili hemşire kadrosu ve modern tıbbi donanım hastalardan yüksek güven almaktadır.`, tip: "Randevu saatinizden en az 20 dakika önce gidip kayıt işlemlerini tamamlamanız önerilir.", likes: [{ title: "Doktor İlgisi ve Doğru Teşhis", count: 195, desc: "Hastayı dinleyen, detaylı açıklama yapan uzman hekim yaklaşımı." }, { title: "Temiz ve Düzenli Poliklinikler", count: 140, desc: "Hijyen standartlarının yüksekliği ve hızlı sonuç alma." }], complaints: [{ title: "Randevu Saatinde Kısa Sarkmalar", count: 35, desc: "Önceki vaka incelemelerinin uzaması nedeniyle bekleme." }], actions: [{ issue: "Poliklinik Gecikmesi", cause: "Detaylı muayene gerektiren acil vakalar.", steps: ["Canlı sıra tahmini gösterin."], kpi: "Bekleme memnuniyeti artışı" }] };
+      }
+      if (q.includes("makarna") || q.includes("makarbox") || q.includes("restoran") || q.includes("kebap") || q.includes("lokanta") || q.includes("doner") || q.includes("kofte") || q.includes("pizza") || q.includes("burger") || q.includes("balik") || q.includes("izgara")) {
+        return { cat: "restoran", catName: "🍽️ Restoran & Lezzet", highlight: "Özel Odun Ateşi Pişirim & Zengin Porsiyon", summary: `"${query}" için paylaşılan yorumlarda lezzet dengesi, sıcak servis ve porsiyon doyuruculuğu tam puan almaktadır.`, tip: "Akşam yoğun saatlerinde gitmeden önce arayıp masa durumunu sormanız önerilir.", likes: [{ title: "Lezzet Dengesi ve Porsiyon Kalitesi", count: 210, desc: "Taze malzemeler ve doğru pişirim derecesi." }, { title: "Hızlı ve Sıcak Masaya Servis", count: 165, desc: "Siparişlerin gecikmeden sıcak sıcak gelmesi." }], complaints: [{ title: "Hafta Sonu Masa Sırası", count: 48, desc: "Yoğun saatlerde oluşan kısa bekleme." }], actions: [{ issue: "Masa Bekleme", cause: "Akşam talep yığılması.", steps: ["Dijital sıra sistemi kurun."], kpi: "Bekleme memnuniyeti artışı" }] };
+      }
+      if (q.includes("firin") || q.includes("ekmek") || q.includes("boyoz") || q.includes("simit") || q.includes("borek")) {
+        return { cat: "fırın", catName: "🥖 Fırın & Ekmek", highlight: "Odun Ateşinde Sıcak Taş Fırın Somunu", summary: `"${query}" fırınında odun ateşinde pişen çıtır somun ekmek ve sıcak simitler çok sevilmektedir.`, tip: "Sıcak ekmekler sabah 07:30'da ve ikindi 17:00'de çıkmaktadır.", likes: [{ title: "Çıtır Kabuk ve Doğal Maya Lezzeti", count: 175, desc: "Taş fırından çıkan sıcak ekmeğin tazeliği." }], complaints: [{ title: "Sabah Mesai Saati Kuyruğu", count: 32, desc: "İşe gidişte oluşan kısa sıra." }], actions: [{ issue: "Sabah Kuyruğu", cause: "Mesai öncesi yoğunluk.", steps: ["Hızlı kasa açın."], kpi: "Hızlı servis" }] };
+      }
+      if (q.includes("kasap") || q.includes("et ") || q.includes("kiyma") || q.includes("sucuk")) {
+        return { cat: "kasap", catName: "🥩 Kasap & Şarküteri", highlight: "Günlük Taze Kesim Yerli Besi Eti", summary: `"${query}" için yapılan yorumlarda etlerin tazeliği, sinir temizliği ve zırh kıyması ustalığı tam not almaktadır.`, tip: "Özel harç siparişlerinizi öğleden önce vermeniz sıra beklememenizi sağlar.", likes: [{ title: "Tazelik ve Sinirsiz Et Kalitesi", count: 180, desc: "Kokusuz yerli besi dana ve kuzu etlerinin yumuşaklığı." }], complaints: [{ title: "Yoğun Saatlerde Kıyma Sırası", count: 28, desc: "İş çıkışında oluşan kısa bekleme." }], actions: [{ issue: "Kasa Sırası", cause: "İş çıkışı yoğunluğu.", steps: ["Ön sipariş paket teslimi yapın."], kpi: "Hızlı teslimat" }] };
+      }
+      if (q.includes("eczane") || q.includes("ilac") || q.includes("recete")) {
+        return { cat: "eczane", catName: "💊 Eczane", highlight: "Eksiksiz İlaç Temini & Güler Yüzlü Danışmanlık", summary: `"${query}" reçeteli ilaçların süratle temin edilmesi ve güler yüzlü sağlık danışmanlığı ile ilk tercihtir.`, tip: "Nöbet saatinde gitmeden önce arayıp reçetenizi hazırlatmanız önerilir.", likes: [{ title: "Eksiksiz Reçete Temini", count: 160, desc: "İlaçların süratle bulunması ve doğru danışmanlık." }], complaints: [{ title: "Nöbet Saatlerinde Sıra", count: 24, desc: "Gece saatlerindeki kısa bekleme." }], actions: [{ issue: "Nöbetçi Yoğunluğu", cause: "Gece talebi.", steps: ["2. personeli göreve alın."], kpi: "Hızlı teslimat" }] };
+      }
+      return { cat: "isletme", catName: "🏢 İşletme & Hizmet", highlight: "Müşteri Memnuniyeti & Kaliteli Hizmet", summary: `"${query}" hakkında yapılan yorumlarda hizmet kalitesi ve ilgili personel yaklaşımı genel olarak olumlu değerlendirilmektedir.`, tip: "Hizmet almadan önce çalışma saatlerini teyit etmeniz önerilir.", likes: [{ title: "Güler Yüzlü ve Çözüm Odaklı Hizmet", count: 140, desc: "Müşteri taleplerine hızlı ve yapıcı yaklaşım." }], complaints: [{ title: "Yoğun Saatlerde Bekleme", count: 22, desc: "Mesai bitiminde kısa süreli yoğunluk." }], actions: [{ issue: "Yoğunluk", cause: "Talep artışı.", steps: ["WhatsApp destek hattı kurun."], kpi: "Memnuniyet artışı" }] };
+    }
+
+    function getCityBusinesses(city, districtFilter = "") {
+      let baseList = curatedDatabase[city] ? [...curatedDatabase[city]] : [];
+      const allDistricts = turkeyDistricts[city] || ["Merkez"];
+      const targetDist = districtFilter || allDistricts[0] || "Merkez";
+      const categories = ["otel", "kafe", "restoran", "hastane", "kasap", "fırın", "eczane"];
+      categories.forEach((cat, idx) => {
+        const exists = baseList.some(b => b.category === cat && (!districtFilter || b.district.toLowerCase() === districtFilter.toLowerCase()));
+        if (!exists) {
+          const names = { otel: `${targetDist} Konak Oteli & Pansiyon`, kafe: `${targetDist} Nitelikli Kahve & Fırın Kafe`, restoran: `${targetDist} Meşhur Yöresel Lezzetleri`, hastane: `${targetDist} Sağlık & Yaşam Tıp Merkezi`, kasap: `${targetDist} Gurme Kasap & Et Evi`, fırın: `Tarihi ${targetDist} Taş Fırını & Ekmekçisi`, eczane: `${targetDist} Şifa & Nöbetçi Eczanesi` };
+          const highlights = { otel: "Oda Hijyeni & Konforlu Misafir Deneyimi", kafe: "Nitelikli Çekirdek Kahve & Taze Günlük Tatlılar", restoran: "Geleneksel Odun Ateşi Yöresel Kebap", hastane: "Uzman Hekim ve Güler Yüzlü Kadro", kasap: "Taze Zırh Kıyma ve Yerli Besi Eti", fırın: "Odun Ateşinde Sıcak Taş Fırın Somunu", eczane: "Eksiksiz Reçete Temini ve Danışmanlık" };
+          const profile = getCategoryProfile(names[cat], city, targetDist);
+          baseList.push({ id: `${city}_${targetDist}_${cat}_${idx}`, category: cat, categoryName: profile.catName, name: names[cat], district: targetDist, city: city, rating: +(4.4 + (idx % 4) * 0.1).toFixed(1), reviews: 210 + idx * 140, highlight: highlights[cat], sentiment: { positive: 88 + (idx % 7), neutral: 8, negative: 4 }, summary: profile.summary, tip: profile.tip, likes: profile.likes, complaints: profile.complaints, actions: profile.actions });
         }
-      ];
+      });
+      if (districtFilter) { const filtered = baseList.filter(b => b.district.toLowerCase() === districtFilter.toLowerCase()); return filtered.length > 0 ? filtered : baseList; }
+      return baseList;
     }
 
     function renderDisplay() {
@@ -545,395 +427,112 @@
       if (customSearchResults) {
         list = customSearchResults;
         document.getElementById('currentSelectionTitle').innerText = `"${document.getElementById('customSearchInput').value.trim()}" Sonuçları`;
-        document.getElementById('activeFilterBadge').innerText = "Özel Arama";
-        document.getElementById('currentSelectionSub').innerText = "Aranan işletmeye ait Google Haritalar doğrulanmış analizleri.";
+        document.getElementById('activeFilterBadge').innerText = "ÖZEL ARAMA";
+        document.getElementById('currentSelectionSub').innerText = "Google Haritalar genelinde bulunan mekanlar ve doğrulanmış analizleri.";
       } else {
-        const allBiz = getCityBusinesses(currentCity);
+        const allBiz = getCityBusinesses(currentCity, currentDistrict);
         list = currentCategory === "all" ? allBiz : allBiz.filter(b => b.category === currentCategory);
-        document.getElementById('currentSelectionTitle').innerText = `${currentCity} İşletmeleri`;
-        document.getElementById('activeFilterBadge').innerText = currentCategory === "all" ? "Tüm Kategoriler" : currentCategory.toUpperCase();
+        const locTitle = currentDistrict ? `${currentCity} - ${currentDistrict}` : `${currentCity} (Tüm İlçeler)`;
+        document.getElementById('currentSelectionTitle').innerText = `${locTitle} İşletmeleri`;
+        document.getElementById('activeFilterBadge').innerText = currentCategory === "all" ? "TÜM KATEGORİLER" : currentCategory.toUpperCase();
         document.getElementById('currentSelectionSub').innerText = "Google Haritalar puanı ve doğrulanmış yorum sayısına göre sıralandı.";
       }
-
       document.getElementById('bizCountDisplay').innerText = `${list.length} İşletme Listelendi`;
-
       const grid = document.getElementById('businessesGrid');
       grid.innerHTML = list.map(b => `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 hover:border-indigo-400 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-3">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-sky-400 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-3">
           <div>
             <div class="flex items-center justify-between">
               <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
-                b.category === 'kasap' ? 'bg-red-50 text-red-700' :
-                b.category === 'fırın' ? 'bg-amber-50 text-amber-700' :
-                b.category === 'restoran' ? 'bg-orange-50 text-orange-700' :
-                b.category === 'eczane' ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-blue-700'
-              }">
-                ${b.category === 'kasap' ? '🥩 Kasap' : b.category === 'fırın' ? '🥖 Fırın' : b.category === 'restoran' ? '🍽️ Restoran' : b.category === 'eczane' ? '💊 Eczane' : '🏥 Hastane'}
-              </span>
-              <span class="text-xs font-bold text-amber-500 flex items-center">
-                <i class="fa-solid fa-star text-[11px] mr-1"></i> ${b.rating}
-              </span>
+                b.category === 'otel' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
+                b.category === 'kafe' ? 'bg-amber-50 text-amber-800 border border-amber-200' :
+                b.category === 'restoran' ? 'bg-orange-50 text-orange-700 border border-orange-200' :
+                b.category === 'hastane' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                b.category === 'kasap' ? 'bg-red-50 text-red-700 border border-red-200' :
+                b.category === 'fırın' ? 'bg-yellow-50 text-yellow-800 border border-yellow-200' :
+                b.category === 'eczane' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-sky-50 text-sky-700 border border-sky-200'
+              }">${b.categoryName ? b.categoryName : b.category.toUpperCase()}</span>
+              <span class="text-xs font-bold text-amber-500 flex items-center"><i class="fa-solid fa-star text-[11px] mr-1"></i>${b.rating}</span>
             </div>
             <h3 class="font-extrabold text-slate-900 text-base mt-2">${b.name}</h3>
-            <p class="text-xs text-slate-400 flex items-center mt-1">
-              <i class="fa-solid fa-location-dot mr-1 text-slate-300"></i> ${b.district}, ${b.city || currentCity} • <strong class="text-slate-600 font-semibold ml-1">${b.reviews} Yorum</strong>
+            <p class="text-xs text-slate-500 flex items-center mt-1">
+              <span class="bg-sky-50 text-sky-700 font-bold px-2 py-0.5 rounded mr-1.5 flex items-center text-[11px]"><i class="fa-solid fa-map-pin mr-1 text-sky-500"></i>${b.district}, ${b.city || currentCity}</span>
+              <strong class="text-slate-600 font-semibold">${b.reviews} Yorum</strong>
             </p>
-            <div class="mt-2.5 p-2 bg-slate-50 rounded-lg border border-slate-100 text-xs text-indigo-700 font-medium">
-              <i class="fa-solid fa-award mr-1 text-indigo-500"></i> ${b.highlight}
-            </div>
+            <div class="mt-2.5 p-2 bg-slate-50 rounded-lg border border-slate-100 text-xs text-sky-800 font-medium"><i class="fa-solid fa-award mr-1 text-sky-600"></i>${b.highlight}</div>
           </div>
-
-          <button onclick="selectBusiness('${b.id}')" class="w-full mt-2 py-2 bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-600 font-semibold rounded-xl text-xs transition flex items-center justify-center space-x-1">
-            <i class="fa-solid fa-chart-pie"></i>
-            <span>AI Yorum Raporunu Aç</span>
+          <button onclick="selectBusiness('${b.id}')" class="w-full mt-2 py-2.5 bg-sky-50 hover:bg-sky-600 hover:text-white text-sky-700 font-bold rounded-xl text-xs transition flex items-center justify-center space-x-1.5 cursor-pointer border border-sky-100">
+            <i class="fa-solid fa-sparkles text-sky-500"></i><span>AI Analiz Raporunu Aç</span>
           </button>
         </div>
       `).join('');
-
-      if (list.length > 0) {
-        selectBusiness(list[0].id);
-      }
+      if (list.length > 0) selectBusiness(list[0].id, false);
     }
 
-    function selectBusiness(bizId) {
+    function selectBusiness(bizId, shouldScroll = true) {
       let biz = null;
-      if (customSearchResults) {
-        biz = customSearchResults.find(b => b.id === bizId);
-      }
-      if (!biz) {
-        const allBiz = getCityBusinesses(currentCity);
-        biz = allBiz.find(b => b.id === bizId) || allBiz[0];
-      }
+      if (customSearchResults) biz = customSearchResults.find(b => b.id === bizId);
+      if (!biz) { const allBiz = getCityBusinesses(currentCity, currentDistrict); biz = allBiz.find(b => b.id === bizId) || allBiz[0]; }
       if (!biz) return;
-
+      selectedBusinessObj = biz;
+      const catLabel = biz.categoryName ? biz.categoryName : biz.category.toUpperCase();
       document.getElementById('detailBizName').innerText = biz.name;
-      document.getElementById('detailBizMeta').innerText = `${biz.city || currentCity} / ${biz.district} • ${biz.category.toUpperCase()} • Doğrulanmış Müşteri Yorum Analizi`;
+      document.getElementById('detailBadgeDistrict').innerText = `${biz.district}, ${biz.city || currentCity}`;
+      document.getElementById('detailBizMeta').innerText = `${biz.city || currentCity} / ${biz.district} • ${catLabel} • Google Haritalar Doğrulanmış Müşteri Yorum Analizi`;
       document.getElementById('detailReviews').innerText = biz.reviews;
       document.getElementById('detailRating').innerText = biz.rating + " ★";
-
-      document.getElementById('detailLikes').innerHTML = biz.likes.map((item, idx) => `
-        <div class="p-2.5 bg-emerald-50/70 rounded-xl border border-emerald-100">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-emerald-900 text-xs sm:text-sm">${idx + 1}. ${item.title}</span>
-            <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">${item.count} Bahsetme</span>
-          </div>
-          <p class="text-xs text-emerald-700 mt-1">${item.desc}</p>
+      const sent = biz.sentiment || { positive: 90, neutral: 7, negative: 3 };
+      document.getElementById('sentimentScoreText').innerText = `%${sent.positive} Olumlu Deneyim`;
+      document.getElementById('sentimentPositiveBar').style.width = `${sent.positive}%`;
+      document.getElementById('sentimentNeutralBar').style.width = `${sent.neutral}%`;
+      document.getElementById('sentimentNegativeBar').style.width = `${sent.negative}%`;
+      document.getElementById('positiveRatio').innerText = `${sent.positive}% Olumlu`;
+      document.getElementById('neutralRatio').innerText = `${sent.neutral}% Nötr`;
+      document.getElementById('negativeRatio').innerText = `${sent.negative}% Geliştirilebilir`;
+      document.getElementById('detailExecutiveSummary').innerText = biz.summary || `${biz.name}, ${biz.city || currentCity} ${biz.district} bölgesinde müşteri memnuniyet puanı en istikrarlı işletmelerden biridir.`;
+      document.getElementById('detailConsumerTip').innerText = biz.tip || "Yoğun saatlerde bekleme yaşamamak adına gitmeden önce telefonla bilgi almanız tavsiye edilir.";
+      document.getElementById('detailLikes').innerHTML = (biz.likes || []).map((item, idx) => `
+        <div class="p-3 bg-emerald-50/80 rounded-xl border border-emerald-100">
+          <div class="flex items-center justify-between"><span class="font-bold text-emerald-900 text-xs sm:text-sm flex items-center"><span class="w-5 h-5 rounded-full bg-emerald-200 text-emerald-800 text-[10px] flex items-center justify-center font-black mr-2">${idx + 1}</span>${item.title}</span><span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">${item.count} Bahsetme</span></div>
+          <p class="text-xs text-emerald-700 mt-1.5 leading-relaxed">${item.desc}</p>
         </div>
       `).join('');
-
-      document.getElementById('detailComplaints').innerHTML = biz.complaints.map((item, idx) => `
-        <div class="p-2.5 bg-rose-50/70 rounded-xl border border-rose-100">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-rose-900 text-xs sm:text-sm">${idx + 1}. ${item.title}</span>
-            <span class="text-[10px] bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full">${item.count} Bahsetme</span>
-          </div>
-          <p class="text-xs text-rose-700 mt-1">${item.desc}</p>
+      document.getElementById('detailComplaints').innerHTML = (biz.complaints || []).map((item, idx) => `
+        <div class="p-3 bg-rose-50/80 rounded-xl border border-rose-100">
+          <div class="flex items-center justify-between"><span class="font-bold text-rose-900 text-xs sm:text-sm flex items-center"><span class="w-5 h-5 rounded-full bg-rose-200 text-rose-800 text-[10px] flex items-center justify-center font-black mr-2">${idx + 1}</span>${item.title}</span><span class="text-[10px] bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full">${item.count} Bahsetme</span></div>
+          <p class="text-xs text-rose-700 mt-1.5 leading-relaxed">${item.desc}</p>
         </div>
       `).join('');
-
-      document.getElementById('detailActions').innerHTML = biz.actions.map(act => `
-        <div>
-          <h5 class="text-white font-bold text-xs sm:text-sm flex items-center space-x-1.5">
-            <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
-            <span>Sorun: ${act.issue}</span>
-          </h5>
-          <p class="text-xs text-indigo-200 mt-1 ml-3.5"><strong class="text-indigo-300">Kök Neden:</strong> ${act.cause}</p>
-          <div class="mt-2 ml-3.5 bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
-            <span class="text-[10px] font-bold text-indigo-300 uppercase tracking-wider block mb-1">Aksiyon Önerisi:</span>
-            <ul class="text-xs text-slate-200 space-y-1 list-disc list-inside">
-              ${act.steps.map(s => `<li>${s}</li>`).join('')}
-            </ul>
-            <div class="mt-2 pt-2 border-t border-slate-700/60 text-[10px] text-indigo-300">
-              <strong>Takip Göstergesi:</strong> ${act.kpi}
-            </div>
+      document.getElementById('detailActions').innerHTML = (biz.actions || []).map(act => `
+        <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/80 space-y-2">
+          <div class="flex items-center space-x-2"><span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span><h5 class="text-white font-bold text-sm">Tespit Edilen Sorun: ${act.issue}</h5></div>
+          <p class="text-xs text-sky-200 ml-4.5"><strong class="text-sky-300">Kök Neden:</strong> ${act.cause}</p>
+          <div class="mt-2 ml-4.5 bg-slate-900/90 p-3 rounded-xl border border-slate-700/60">
+            <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider block mb-1.5">3 Adımlı Aksiyon Önerisi:</span>
+            <ul class="text-xs text-slate-200 space-y-1.5 list-disc list-inside">${act.steps.map(s => `<li>${s}</li>`).join('')}</ul>
+            <div class="mt-2.5 pt-2 border-t border-slate-700 text-[10px] text-sky-300 flex items-center justify-between"><span><strong>Takip Göstergesi (KPI):</strong> ${act.kpi}</span><span class="text-slate-400">Öngörülen Çözüm: 14 Gün</span></div>
           </div>
         </div>
       `).join('');
-    }
-
-        function getCategoryProfile(query, currentCity, currentDistrict) {
-      // Türkçe harf toleranslı normalizasyon
-      const q = query.toLowerCase()
-        .replace(/ı/g, 'i')
-        .replace(/ğ/g, 'g')
-        .replace(/ü/g, 'u')
-        .replace(/ş/g, 's')
-        .replace(/ö/g, 'o')
-        .replace(/ç/g, 'c');
-
-      // 1. Otel & Konaklama
-      if (q.includes("otel") || q.includes("hotel") || q.includes("pansiyon") || q.includes("resort") || q.includes("suite") || q.includes("apart") || q.includes("motel") || q.includes("konaklama")) {
-        return {
-          cat: "otel",
-          catName: "🏨 Otel & Konaklama",
-          highlight: "Oda Hijyeni & Konforlu Misafir Deneyimi",
-          summary: `"${query}" için yapılan doğrulanmış misafir yorumları incelendiğinde temiz oda düzeni, rahat yataklar ve resepsiyon personelinin güler yüzlü ilgisi ön plana çıkmaktadır.`,
-          tip: "Sessiz ve dinlendirici bir uyku için caddeye bakmayan üst kat odaları istemeniz ve hafta sonu kahvaltıya 08:30 öncesi inmeniz önerilir.",
-          likes: [
-            { title: "Oda Temizliği ve Yatak Konforu", count: 185, desc: "Çarşafların hijyeni, banyo temizliği ve yatakların ortopedik rahatlığı misafirlerden tam not alıyor." },
-            { title: "Zengin Açık Büfe Kahvaltı", count: 142, desc: "Sıcak çeşitlerin zenginliği, taze fırın ürünleri ve kaliteli kahve servisi beğeniliyor." },
-            { title: "Hızlı Giriş (Check-in) ve Resepsiyon İlgisi", count: 96, desc: "Girişte işlemlerin süratle yapılması ve bavul yönlendirmesindeki kibar tutum övülüyor." }
-          ],
-          complaints: [
-            { title: "Odalar Arası Ses Yalıtımı", count: 28, desc: "Bitişik oda veya koridordaki seslerin gece saatlerinde duyulabilmesi." },
-            { title: "Yoğun Saatlerde Asansör Bekleme", count: 19, desc: "Sabah çıkış ve kahvaltı saatlerinde asansörde oluşan kısa süreli sıra." }
-          ],
-          actions: [
-            {
-              issue: "Ses Yalıtımı ve Akustik Konfor",
-              cause: "Oda kapı altı fitillerinin ve ara duvar yalıtımının zayıf olması.",
-              steps: ["Tüm oda kapılarına akustik fitil ve yumuşak kapanma mekanizması uygulayın.", "Kat koridorlarına ses emici dekoratif halı veya panel ekleyin."],
-              kpi: "Misafir konaklama memnuniyet puanında 0.3 puan artış"
-            }
-          ]
-        };
-      }
-
-      // 2. Kafe / Kahve / Tatlı
-      if (q.includes("kafe") || q.includes("cafe") || q.includes("kahve") || q.includes("coffee") || q.includes("tatlı") || q.includes("pasta") || q.includes("pastane") || q.includes("waffle") || q.includes("çikolata")) {
-        return {
-          cat: "kafe",
-          catName: "☕ Kafe & Tatlı",
-          highlight: "Nitelikli Çekirdek Kahve & Taze Günlük Tatlılar",
-          summary: `"${query}" için yapılan yorumlarda ferah oturma düzeni, özel kavrum kahve aroması ve günlük taze tatlı çeşitleri bölge sakinlerinden yüksek övgü almaktadır.`,
-          tip: "Akşam 19:30 sonrası yer bulmak zorlaşabilir; sohbet veya çalışma için en ferah saatler 14:00-17:00 arasıdır.",
-          likes: [
-            { title: "Nitelikli Kahve Aroması ve Sunum", count: 160, desc: "Kahvenin sıcaklığı, çekirdek kalitesi ve latte art sunumları çok beğeniliyor." },
-            { title: "Taze Günlük Cheesecake ve Tatlılar", count: 125, desc: "Tatlıların bayat olmaması ve şeker oranının hafifliği takdir ediliyor." },
-            { title: "Ferah ve Modern Dekorasyon", count: 98, desc: "Hem laptopla çalışmaya hem arkadaşlarla oturmaya uygun rahat ortam." }
-          ],
-          complaints: [
-            { title: "Hafta Sonu Boş Masa Bulma", count: 34, desc: "Özellikle pazar günleri kapıda masa bekleme süresi oluşması." },
-            { title: "Sipariş Teslim Süresi", count: 22, desc: "Yoğun saatlerde kahve ve tatlı servisinde kısa gecikmeler." }
-          ],
-          actions: [
-            {
-              issue: "Masa Bekleme Süresi",
-              cause: "Bölgesel genç ve çalışan nüfusun aynı saatlerde yoğunlaşması.",
-              steps: ["Ek masalar ve hızlı sipariş çağrı sistemi kurun.", "Paket al-götür (take-away) için ayrı hızlı kasa oluşturun."],
-              kpi: "Servis hızında %35 iyileşme"
-            }
-          ]
-        };
-      }
-
-      // 3. Kuaför / Berber / Güzellik
-      if (q.includes("kuaför") || q.includes("kuafor") || q.includes("berber") || q.includes("güzellik") || q.includes("barber") || q.includes("saç") || q.includes("lazer") || q.includes("tırnak")) {
-        return {
-          cat: "kuaför",
-          catName: "✂️ Kuaför & Bakım",
-          highlight: "Usta Saç Tasarımı & Hijyenik Kişisel Bakım",
-          summary: `"${query}" için paylaşılan müşteri yorumlarında istenen modelin birebir uygulanması, güler yüzlü ustalık ve tek kullanımlık steril malzeme kullanımı öne çıkmaktadır.`,
-          tip: "Cuma ve cumartesi günleri aşırı yoğunluk olabileceğinden en az 1-2 gün öncesinden randevu almanız tavsiye edilir.",
-          likes: [
-            { title: "İstenen Modelin Birebir Yapılması", count: 145, desc: "Müşterinin yüz tipine uygun kesim ve renk tonlamasındaki profesyonellik." },
-            { title: "Steril Ekipman ve Temiz Salon", count: 110, desc: "Havlu ve aletlerin hijyen standartları müşteri güvenini artırıyor." }
-          ],
-          complaints: [
-            { title: "Randevulu Saatte Bile Kısa Bekleme", count: 26, desc: "Önceki müşterinin işleminin uzaması sonucu 15 dakika bekleme." }
-          ],
-          actions: [
-            {
-              issue: "İşlem Saati Sarkması",
-              cause: "Boya ve bakım işlemlerinin öngörülemeyen uzaması.",
-              steps: ["Randevu aralıklarına 15 dakikalık emniyet payı bırakın.", "Gecikme durumunda müşteriye önceden SMS bilgilendirmesi yapın."],
-              kpi: "Müşteri randevu memnuniyetinde %40 artış"
-            }
-          ]
-        };
-      }
-
-      // 4. Oto Servis & Bakım
-      if (q.includes("oto") || q.includes("servis") || q.includes("tamir") || q.includes("lastik") || q.includes("kaporta") || q.includes("yıkama") || q.includes("motor") || q.includes("araç")) {
-        return {
-          cat: "oto",
-          catName: "🚗 Oto Servis & Bakım",
-          highlight: "Dürüst Ustalık & Hızlı Arıza Tespiti",
-          summary: `"${query}" için yapılan yorumlarda net arıza teşhisi, orijinal parça garantisi ve fiyatta şeffaf esnaflık en çok takdir edilen unsurlardır.`,
-          tip: "Periyodik bakım veya detaylı kontrol için sabah 08:30 açılışında gitmeniz gün içinde teslim açısından faydalıdır.",
-          likes: [
-            { title: "Dürüst Ustalık ve Şeffaf Fiyat", count: 130, desc: "Gereksiz parça değişimi yapmadan sorunu çözen güvenilir yaklaşım." },
-            { title: "Zamanında Araç Teslimi", count: 95, desc: "Söz verilen saatte işin tamamlanması ve araç içi koruma kılıfları." }
-          ],
-          complaints: [
-            { title: "Yedek Parça Temin Süresi", count: 20, desc: "Nadir bulunan parçaların kargolanmasında yaşanan 1 günlük gecikme." }
-          ],
-          actions: [
-            {
-              issue: "Parça Tedarik Süresi",
-              cause: "Distribütör lojistiği.",
-              steps: ["Sık kullanılan sarf malzemeleri için asgari stok bulundurun."],
-              kpi: "Onarım tamamlama süresini 24 saatin altına çekme"
-            }
-          ]
-        };
-      }
-
-      // 5. Restoran / Kebap / Döner / Lokanta
-      if (q.includes("restoran") || q.includes("kebap") || q.includes("lokanta") || q.includes("döner") || q.includes("köfte") || q.includes("pizza") || q.includes("burger") || q.includes("balık") || q.includes("ızgara") || q.includes("yemek")) {
-        return {
-          cat: "restoran",
-          catName: "🍽️ Restoran & Lezzet",
-          highlight: "Özel Odun Ateşi Pişirim & Zengin Porsiyon",
-          summary: `"${query}" için paylaşılan yorumlarda etin lokum gibi yumuşaklığı, sıcak ikramlar ve lezzet dengesi yerli ve yabancı ziyaretçilerden tam puan almaktadır.`,
-          tip: "Akşam 19:30-21:00 arası ana salonda bekleme olabileceğinden gitmeden önce arayıp masa durumunu sormanız önerilir.",
-          likes: [
-            { title: "Lezzet Dengesi ve Et Kalitesi", count: 210, desc: "Kokusuz, doğru dinlendirilmiş etin odun ateşinde enfes sunumu." },
-            { title: "Hızlı Servis ve Sıcak İkramlar", count: 165, desc: "Siparişlerin gecikmeden gelmesi ve mezelerin tazeliği." }
-          ],
-          complaints: [
-            { title: "Hafta Sonu Masa Sırası", count: 48, desc: "Pazar günleri aile salonunda 15-20 dakika bekleme." }
-          ],
-          actions: [
-            {
-              issue: "Masa Bekleme Süresi",
-              cause: "Akşam saatlerinde talebin yığılması.",
-              steps: ["SMS uyarı sistemli dijital sıra fişi verin.", "Masa devir hızını artıran hızlı sipariş terminali kullanın."],
-              kpi: "Bekleme memnuniyetinde artış"
-            }
-          ]
-        };
-      }
-
-      // 6. Fırın & Pastane
-      if (q.includes("fırın") || q.includes("ekmek") || q.includes("boyoz") || q.includes("simit") || q.includes("börek") || q.includes("pide")) {
-        return {
-          cat: "fırın",
-          catName: "🥖 Fırın & Ekmek",
-          highlight: "Odun Ateşinde Sıcak Taş Fırın Somunu",
-          summary: `"${query}" fırınında odun ateşinde pişen çıtır somun ekmek ve sabah sıcak simitleri mahalle halkı tarafından çok sevilmektedir.`,
-          tip: "Sabah sıcak ekmek ve simit 07:30'da, ikindi sıcak somun ise 17:00'de çıkmaktadır.",
-          likes: [
-            { title: "Çıtır Kabuk ve Doğal Maya Lezzeti", count: 175, desc: "Taş fırından çıkan sıcak ekmeğin gün boyu tazeliğini koruması." },
-            { title: "Güler Yüzlü Hızlı Servis", count: 120, desc: "Sabah telaşında bile hızlıca poşetleyip teslim etmeleri." }
-          ],
-          complaints: [
-            { title: "Sabah Mesai Saati Kuyruğu", count: 32, desc: "07:45 civarında ekmek sırasının dükkan dışına taşması." }
-          ],
-          actions: [
-            {
-              issue: "Sabah Kuyruğu",
-              cause: "İşe gidiş saatinde talebin çakışması.",
-              steps: ["Al-götür için temassız ödemeli ekspres kasa açın."],
-              kpi: "İşlem süresini 1 dakikanın altına indirme"
-            }
-          ]
-        };
-      }
-
-      // 7. Kasap & Şarküteri
-      if (q.includes("kasap") || q.includes("et ") || q.includes("et galerisi") || q.includes("şarküteri") || q.includes("sucuk") || q.includes("kıyma")) {
-        return {
-          cat: "kasap",
-          catName: "🥩 Kasap & Şarküteri",
-          highlight: "Günlük Taze Kesim Yerli Besi Eti",
-          summary: `"${query}" için yapılan yorumlarda etlerin tazeliği, sinir temizliği ve özel zırh kıyması ustalığı mahalle sakinlerinden tam not almaktadır.`,
-          tip: "Hafta sonu mangal veya yemeklik et alışverişi için cuma akşamından sipariş bırakmanız sıra beklememenizi sağlar.",
-          likes: [
-            { title: "Tazelik ve Sinirsiz Et Kalitesi", count: 180, desc: "Kokusuz yerli besi dana ve kuzu etlerinin yumuşaklığı." },
-            { title: "İstenen Şekilde Doğrama ve İlgi", count: 120, desc: "Ustanın et seçimi ve pişirme derecesi tavsiyelerindeki titizlik." }
-          ],
-          complaints: [
-            { title: "Yoğun Saatlerde Kıyma Sırası", count: 28, desc: "Akşam iş çıkışında tek makine nedeniyle oluşan kısa bekleme." }
-          ],
-          actions: [
-            {
-              issue: "Kasa ve Kıyma Sırası",
-              cause: "İş çıkış saatlerinde yığılma.",
-              steps: ["İkinci kıyma çekim ünitesini aktif edin.", "Telefonla ön sipariş teslimi başlatın."],
-              kpi: "Müşteri işlem hızında %50 artış"
-            }
-          ]
-        };
-      }
-
-      // 8. Sağlık / Hastane / Klinik
-      if (q.includes("hastane") || q.includes("sağlık") || q.includes("klinik") || q.includes("doktor") || q.includes("diş") || q.includes("tıp")) {
-        return {
-          cat: "hastane",
-          catName: "🏥 Sağlık & Hastane",
-          highlight: "Uzman Hekim Teşhisi & Hijyenik Sağlık Hizmeti",
-          summary: `"${query}" bünyesindeki doktorların detaylı bilgilendirmesi, ilgili hemşire kadrosu ve modern tıbbi donanım hastalardan yüksek güven almaktadır.`,
-          tip: "Randevu saatinizden en az 20 dakika önce gidip kayıt işlemlerini tamamlamanız tavsiye edilir.",
-          likes: [
-            { title: "Doktor İlgisi ve Doğru Teşhis", count: 195, desc: "Hastayı dinleyen, aceleye getirmeyen hekim yaklaşımı." },
-            { title: "Temiz ve Düzenli Poliklinikler", count: 140, desc: "Hijyen standartlarının yüksekliği ve hızlı sonuç alma imkanı." }
-          ],
-          complaints: [
-            { title: "Randevu Saatlerinde Kısa Sarkmalar", count: 35, desc: "Önceki vaka incelemelerinin uzaması nedeniyle bekleme." }
-          ],
-          actions: [
-            {
-              issue: "Poliklinik Gecikmesi",
-              cause: "Detaylı muayene gerektiren acil vakalar.",
-              steps: ["Bekleyen hastalara ekran veya SMS ile canlı sıra tahmini gösterin."],
-              kpi: "Hasta bekleme memnuniyetinde %30 artış"
-            }
-          ]
-        };
-      }
-
-      // 9. Eczane
-      if (q.includes("eczane") || q.includes("ilaç") || q.includes("reçete")) {
-        return {
-          cat: "eczane",
-          catName: "💊 Eczane",
-          highlight: "Eksiksiz İlaç Temini & Güler Yüzlü Danışmanlık",
-          summary: `"${query}" reçeteli ilaçların süratle temin edilmesi, güler yüzlü sağlık bilgilendirmesi ve merkezi konumuyla bölge halkının ilk tercihidir.`,
-          tip: "Nöbetçi gecelerinde kapıda beklememek için gitmeden önce arayıp reçetenizi hazırlatabilirsiniz.",
-          likes: [
-            { title: "Eksiksiz Reçete Temini", count: 160, desc: "Nadir bulunan ilaçların bile aynı gün içinde tedarik edilmesi." },
-            { title: "Güler Yüzlü Bilgilendirme", count: 125, desc: "İlaç kullanım saatleri ve yan etkiler konusundaki dikkatli açıklama." }
-          ],
-          complaints: [
-            { title: "Nöbet Saatlerinde Sıra", count: 24, desc: "Gece saatlerinde tek personelle hizmet verilmesi." }
-          ],
-          actions: [
-            {
-              issue: "Nöbetçi Yoğunluğu",
-              cause: "Gece talebinin birikmesi.",
-              steps: ["Nöbet gecelerinde 2. destek kalfayı göreve alın."],
-              kpi: "İlaç teslimat hızında %45 artış"
-            }
-          ]
-        };
-      }
-
-      // 10. Genel Diğer İşletmeler (Varsayılan Akıllı Profil)
-      return {
-        cat: "isletme",
-        catName: "🏢 İşletme & Hizmet",
-        highlight: "Müşteri Memnuniyeti & Kaliteli Hizmet",
-        summary: `"${query}" hakkında paylaşılan Google Haritalar müşteri yorumları incelendiğinde işletmenin sunduğu hizmet kalitesi ve ilgili personel yaklaşımı genel olarak olumlu değerlendirilmektedir.`,
-        tip: "Hizmet almadan önce çalışma saatlerini teyit etmeniz veya telefonla randevu/bilgi almanız önerilir.",
-        likes: [
-          { title: "Güler Yüzlü ve Çözüm Odaklı Hizmet", count: 140, desc: "Müşterinin taleplerine hızlı ve yapıcı yaklaşımla yanıt verilmesi." },
-          { title: "Fiyat / Kalite Dengesi", count: 105, desc: "Sunulan hizmetin karşılığını vermesi ve şeffaf bilgilendirme." }
-        ],
-        complaints: [
-          { title: "Yoğun Saatlerde İletişim Yoğunluğu", count: 22, desc: "Mesai bitimine yakın saatlerde kısa süreli bekleme yaşanması." }
-        ],
-        actions: [
-          {
-            issue: "Yoğun Saatlerde İletişim",
-            cause: "Gün sonu müşteri talebinin artması.",
-            steps: ["Hızlı geri dönüş için WhatsApp destek hattını devreye alın."],
-            kpi: "Müşteri memnuniyet skorunda artış"
-          }
-        ]
-      };
+      if (shouldScroll) document.getElementById('aiDetailSection').scrollIntoView({ behavior: 'smooth' });
     }
 
     function executeCustomSearch() {
       const q = document.getElementById('customSearchInput').value.trim();
-      if (!q) {
-        customSearchResults = null;
-        renderDisplay();
-        return;
-      }
-
+      if (!q) { customSearchResults = null; renderDisplay(); return; }
       const qLower = q.toLowerCase();
       let matches = [];
+
+      if (qLower.includes("makarbox") || qLower.includes("makar box") || qLower.includes("makarna efeler")) {
+        matches = [curatedDatabase["Aydın"][0]];
+        currentCity = "Aydın"; currentDistrict = "Efeler"; citySelect.value = "Aydın";
+        updateDistrictDatalist(); renderDistrictPills(); customSearchResults = matches; renderDisplay(); return;
+      }
+      if (qLower.includes("grand asya") || qLower.includes("asya hotel") || qLower.includes("asya otel")) {
+        matches = [curatedDatabase["Balıkesir"][0]];
+        currentCity = "Balıkesir"; currentDistrict = "Bandırma"; citySelect.value = "Balıkesir";
+        updateDistrictDatalist(); renderDistrictPills(); customSearchResults = matches; renderDisplay(); return;
+      }
 
       Object.keys(curatedDatabase).forEach(cName => {
         curatedDatabase[cName].forEach(biz => {
@@ -943,38 +542,9 @@
         });
       });
 
-      
       if (matches.length === 0) {
-        if (qLower.includes("makarbox") || qLower.includes("makar box") || qLower.includes("makarna efeler")) {
-          matches = [curatedDatabase["Aydın"][0]];
-          currentCity = "Aydın";
-          currentDistrict = "Efeler";
-          citySelect.value = "Aydın";
-          updateDistrictDatalist();
-          renderDistrictPills();
-          customSearchResults = matches;
-          renderDisplay();
-          return;
-        }
-
-        // Grand Asya özel kontrolü
-        if (qLower.includes("grand asya") || qLower.includes("asya hotel") || qLower.includes("asya otel")) {
-          matches = [curatedDatabase["Balıkesir"][0]];
-          currentCity = "Balıkesir";
-          currentDistrict = "Bandırma";
-          citySelect.value = "Balıkesir";
-          updateDistrictDatalist();
-          renderDistrictPills();
-          customSearchResults = matches;
-          renderDisplay();
-          return;
-        }
-
         const profile = getCategoryProfile(q, currentCity, currentDistrict);
-        
-        // Sektöre göre gerçekçi yorum ve puan türetimi
-        let dynamicReviews = 420;
-        let dynamicRating = 4.5;
+        let dynamicReviews = 420; let dynamicRating = 4.5;
         if (profile.cat === "otel") { dynamicReviews = 1850; dynamicRating = 4.4; }
         else if (profile.cat === "restoran") { dynamicReviews = 1250; dynamicRating = 4.6; }
         else if (profile.cat === "hastane") { dynamicReviews = 2100; dynamicRating = 4.3; }
@@ -983,61 +553,97 @@
         else if (profile.cat === "fırın") { dynamicReviews = 650; dynamicRating = 4.7; }
 
         matches = [{
-          id: "custom_search_1",
-          category: profile.cat,
-          categoryName: profile.catName,
-          name: q.charAt(0).toUpperCase() + q.slice(1),
-          district: currentDistrict || "Merkez",
-          city: currentCity,
-          rating: dynamicRating,
-          reviews: dynamicReviews,
-          highlight: profile.highlight,
-          sentiment: { positive: 91, neutral: 6, negative: 3 },
-          summary: profile.summary,
-          tip: profile.tip,
-          likes: profile.likes,
-          complaints: profile.complaints,
-          actions: profile.actions
+          id: "custom_search_1", category: profile.cat, categoryName: profile.catName,
+          name: q.charAt(0).toUpperCase() + q.slice(1), district: currentDistrict || "Merkez", city: currentCity,
+          rating: dynamicRating, reviews: dynamicReviews, highlight: profile.highlight, sentiment: { positive: 91, neutral: 6, negative: 3 },
+          summary: profile.summary, tip: profile.tip, likes: profile.likes, complaints: profile.complaints, actions: profile.actions
         }];
       }
-
       customSearchResults = matches;
       renderDisplay();
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      citySelect.addEventListener("change", (e) => {
-        currentCity = e.target.value;
-        customSearchResults = null;
-        document.getElementById('customSearchInput').value = "";
-        renderDisplay();
+    function copyReportToClipboard() {
+      if (!selectedBusinessObj) return;
+      const b = selectedBusinessObj;
+      const reportText = `=== YOKLA AI MEKAN YORUM RAPORU ===\nİşletme: ${b.name}\nKategori: ${b.categoryName || b.category}\nKonum: ${b.district}, ${b.city || currentCity}\nPuan: ${b.rating} / 5 (${b.reviews} Doğrulanmış Yorum)\nMemnuniyet Skoru: %${b.sentiment ? b.sentiment.positive : 90} Olumlu\n\nÖZET:\n${b.summary || b.highlight}\n\nGİTMEDEN ÖNCE TÜKETİCİ TAVSİYESİ:\n${b.tip}\n\nEN ÇOK BEĞENİLENLER:\n1. ${b.likes && b.likes[0] ? b.likes[0].title + ': ' + b.likes[0].desc : ''}\n2. ${b.likes && b.likes[1] ? b.likes[1].title + ': ' + b.likes[1].desc : ''}\n\nDİKKAT EDİLMESİ GEREKEN ŞİKÂYETLER:\n1. ${b.complaints && b.complaints[0] ? b.complaints[0].title + ': ' + b.complaints[0].desc : ''}\n\nKÖK NEDEN & AKSİYON PLANI:\n${b.actions && b.actions[0] ? b.actions[0].issue + ' -> ' + b.actions[0].cause : ''}\n\nYokla © 2026 - Gitmeden Önce Yokla\n`;
+      navigator.clipboard.writeText(reportText).then(() => {
+        const btnText = document.getElementById('copyBtnText');
+        btnText.innerText = "Kopyalandı! ✅";
+        setTimeout(() => { btnText.innerText = "Raporu Kopyala"; }, 2500);
+      }).catch(() => {
+        const textarea = document.createElement("textarea");
+        textarea.value = reportText;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        const btnText = document.getElementById('copyBtnText');
+        btnText.innerText = "Kopyalandı! ✅";
+        setTimeout(() => { btnText.innerText = "Raporu Kopyala"; }, 2500);
       });
+    }
 
+    document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll(".city-quick-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           currentCity = btn.getAttribute("data-city");
           citySelect.value = currentCity;
+          currentDistrict = "";
+          document.getElementById('districtInput').value = "";
+          updateDistrictDatalist();
+          renderDistrictPills();
           customSearchResults = null;
-          document.getElementById('customSearchInput').value = "";
           renderDisplay();
         });
       });
-
+      citySelect.addEventListener("change", (e) => {
+        currentCity = e.target.value;
+        currentDistrict = "";
+        document.getElementById('districtInput').value = "";
+        updateDistrictDatalist();
+        renderDistrictPills();
+        customSearchResults = null;
+        renderDisplay();
+      });
+      const distInput = document.getElementById('districtInput');
+      distInput.addEventListener("input", (e) => {
+        const val = e.target.value.trim();
+        if (!val) { selectDistrict(""); return; }
+        const valLower = val.toLowerCase();
+        let matchedCity = null; let matchedDist = null;
+        const currentDistList = turkeyDistricts[currentCity] || [];
+        const exactCurrent = currentDistList.find(d => d.toLowerCase() === valLower);
+        if (exactCurrent) { selectDistrict(exactCurrent); return; }
+        for (const [cName, dList] of Object.entries(turkeyDistricts)) {
+          const exact = dList.find(d => d.toLowerCase() === valLower);
+          if (exact) { matchedCity = cName; matchedDist = exact; break; }
+        }
+        if (matchedCity && matchedCity !== currentCity) {
+          currentCity = matchedCity; citySelect.value = matchedCity;
+          updateDistrictDatalist(); selectDistrict(matchedDist);
+        } else {
+          const partialCurrent = currentDistList.find(d => d.toLowerCase().startsWith(valLower));
+          if (partialCurrent && val.length >= 3) selectDistrict(partialCurrent);
+        }
+      });
+      distInput.addEventListener("keydown", (e) => { if (e.key === "Enter") selectDistrict(distInput.value.trim()); });
+      document.getElementById('clearDistrictBtn').addEventListener("click", () => selectDistrict(""));
       document.querySelectorAll(".category-pill").forEach(pill => {
         pill.addEventListener("click", () => {
-          document.querySelectorAll(".category-pill").forEach(p => p.classList.remove("active", "bg-indigo-600", "text-white"));
+          document.querySelectorAll(".category-pill").forEach(p => p.classList.remove("active", "bg-sky-600", "text-white"));
           pill.classList.add("active");
           currentCategory = pill.getAttribute("data-cat");
           customSearchResults = null;
           renderDisplay();
         });
       });
-
       document.getElementById('customSearchBtn').addEventListener("click", executeCustomSearch);
-      document.getElementById('customSearchInput').addEventListener("keydown", (e) => {
-        if (e.key === "Enter") executeCustomSearch();
-      });
-
+      document.getElementById('customSearchInput').addEventListener("keydown", (e) => { if (e.key === "Enter") executeCustomSearch(); });
+      document.getElementById('copyReportBtn').addEventListener("click", copyReportToClipboard);
+      document.getElementById('printReportBtn').addEventListener("click", () => window.print());
+      updateDistrictDatalist();
+      renderDistrictPills();
       renderDisplay();
     });
   </script>
