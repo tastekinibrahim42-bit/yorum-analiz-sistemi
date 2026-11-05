@@ -213,6 +213,9 @@
             <div class="text-center"><span id="detailRating" class="block text-lg font-black text-amber-500">4.7 ★</span><span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Puan</span></div>
           </div>
           <div class="flex items-center gap-2">
+            <a id="detailMapBtn" target="_blank" href="#" class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs rounded-xl transition flex items-center space-x-1.5 cursor-pointer shadow-xs">
+              <i class="fa-solid fa-map-location-dot"></i><span>Haritada Göster</span>
+            </a>
             <button id="copyReportBtn" type="button" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold text-xs rounded-xl transition flex items-center space-x-1.5 cursor-pointer shadow-xs">
               <i class="fa-regular fa-copy"></i><span id="copyBtnText">Raporu Kopyala</span>
             </button>
@@ -259,6 +262,28 @@
       <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl">
         <h4 class="text-amber-900 font-bold text-sm flex items-center space-x-2 mb-1"><i class="fa-solid fa-lightbulb text-amber-600"></i><span>Gitmeden Önce Bilinmesi Gereken Tüketici İpucu:</span></h4>
         <p id="detailConsumerTip" class="text-xs sm:text-sm text-amber-800 leading-relaxed"></p>
+      </div>
+
+      <!-- Canlı Google Haritalar Konumu -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <div>
+              <h4 class="text-slate-900 font-bold text-sm">Google Haritalar Canlı Konum ve Yol Tarifi</h4>
+              <p id="detailMapSub" class="text-xs text-slate-500">Mekanın Google Haritalar üzerindeki gerçek konumu</p>
+            </div>
+          </div>
+          <a id="detailMapOpenLink" target="_blank" href="#" class="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-3 py-1.5 rounded-xl transition flex items-center space-x-1.5">
+            <span>Haritada Aç</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </a>
+        </div>
+        <div class="w-full h-56 sm:h-72 rounded-xl overflow-hidden border border-slate-200 relative bg-slate-100">
+          <iframe id="detailMapIframe" class="w-full h-full border-0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src=""></iframe>
+        </div>
       </div>
       <!-- Kök Neden & Aksiyon Planı -->
       <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 rounded-3xl shadow-xl space-y-4">
@@ -364,6 +389,62 @@
       container.querySelectorAll('.district-pill').forEach(btn => { btn.addEventListener('click', () => selectDistrict(btn.getAttribute('data-dist'))); });
     }
 
+    function getGoogleMapsUrl(biz) {
+      const q = `${biz.name}, ${biz.district}, ${biz.city || currentCity}`;
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+    }
+
+    function getGoogleMapsEmbedUrl(biz) {
+      const q = `${biz.name}, ${biz.district}, ${biz.city || currentCity}`;
+      return `https://maps.google.com/maps?q=${encodeURIComponent(q)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+    }
+
+    function parseSearchQuery(rawQuery) {
+      let q = rawQuery.trim();
+      let detectedCity = currentCity;
+      let detectedDistrict = currentDistrict;
+      let cleanName = q;
+      const qLower = q.toLowerCase();
+
+      // Check if user entered ONLY a district name across 81 provinces
+      for (const [cName, dList] of Object.entries(turkeyDistricts)) {
+        const exactD = dList.find(d => d.toLowerCase() === qLower);
+        if (exactD) {
+          return { isOnlyDistrict: true, city: cName, district: exactD, name: "" };
+        }
+      }
+
+      // Check if search query starts with a district or city prefix (e.g. "Muratpaşa Köfteci", "Bandırma Otel")
+      if (currentDistrict && qLower.startsWith(currentDistrict.toLowerCase())) {
+        cleanName = q.slice(currentDistrict.length).trim().replace(/^[-–—:,/]\s*/, '').trim();
+      } else if (currentCity && qLower.startsWith(currentCity.toLowerCase())) {
+        cleanName = q.slice(currentCity.length).trim().replace(/^[-–—:,/]\s*/, '').trim();
+      }
+
+      if (cleanName === q) {
+        for (const [cName, dList] of Object.entries(turkeyDistricts)) {
+          for (const d of dList) {
+            if (qLower.startsWith(d.toLowerCase() + " ")) {
+              detectedDistrict = d;
+              detectedCity = cName;
+              cleanName = q.slice(d.length).trim().replace(/^[-–—:,/]\s*/, '').trim();
+              break;
+            }
+          }
+          if (cleanName !== q) break;
+          if (qLower.startsWith(cName.toLowerCase() + " ")) {
+            detectedCity = cName;
+            cleanName = q.slice(cName.length).trim().replace(/^[-–—:,/]\s*/, '').trim();
+            break;
+          }
+        }
+      }
+
+      if (!cleanName) cleanName = q;
+      cleanName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+      return { isOnlyDistrict: false, city: detectedCity, district: detectedDistrict, name: cleanName };
+    }
+
     function selectDistrict(distName) {
       currentDistrict = distName ? distName.trim() : "";
       const distInput = document.getElementById('districtInput');
@@ -376,6 +457,40 @@
       renderDistrictPills();
       customSearchResults = null;
       renderDisplay();
+    }
+
+    
+    function getCategoryBadge(cat, customName) {
+      if (customName) return customName;
+      const map = {
+        otel: "🏨 Otel & Konaklama",
+        kafe: "☕ Kafe & Tatlı",
+        restoran: "🍽️ Restoran & Lezzet",
+        hastane: "🏥 Sağlık & Hastane",
+        kasap: "🥩 Kasap & Şarküteri",
+        fırın: "🥖 Fırın & Ekmek",
+        eczane: "💊 Eczane",
+        kuaför: "✂️ Kuaför & Bakım",
+        oto: "🚗 Oto Servis & Bakım",
+        isletme: "🏢 İşletme & Hizmet"
+      };
+      return map[cat] || "🏢 İşletme & Hizmet";
+    }
+
+    function getCategoryColorClass(cat) {
+      const map = {
+        otel: "bg-purple-50 text-purple-700 border border-purple-200",
+        kafe: "bg-amber-50 text-amber-800 border border-amber-200",
+        restoran: "bg-orange-50 text-orange-700 border border-orange-200",
+        hastane: "bg-blue-50 text-blue-700 border border-blue-200",
+        kasap: "bg-red-50 text-red-700 border border-red-200",
+        fırın: "bg-yellow-50 text-yellow-800 border border-yellow-200",
+        eczane: "bg-emerald-50 text-emerald-700 border border-emerald-200",
+        kuaför: "bg-pink-50 text-pink-700 border border-pink-200",
+        oto: "bg-slate-100 text-slate-800 border border-slate-300",
+        isletme: "bg-sky-50 text-sky-700 border border-sky-200"
+      };
+      return map[cat] || "bg-sky-50 text-sky-700 border border-sky-200";
     }
 
     function getCategoryProfile(query, currentCity, currentDistrict) {
@@ -412,7 +527,7 @@
       categories.forEach((cat, idx) => {
         const exists = baseList.some(b => b.category === cat && (!districtFilter || b.district.toLowerCase() === districtFilter.toLowerCase()));
         if (!exists) {
-          const names = { otel: `${targetDist} Konak Oteli & Pansiyon`, kafe: `${targetDist} Nitelikli Kahve & Fırın Kafe`, restoran: `${targetDist} Meşhur Yöresel Lezzetleri`, hastane: `${targetDist} Sağlık & Yaşam Tıp Merkezi`, kasap: `${targetDist} Gurme Kasap & Et Evi`, fırın: `Tarihi ${targetDist} Taş Fırını & Ekmekçisi`, eczane: `${targetDist} Şifa & Nöbetçi Eczanesi` };
+          const names = { otel: "Grand Palas Butik Otel & Spa", kafe: "Artisan Coffee Roastery & Bakery", restoran: "Geleneksel Odun Ateşi Yöresel Lezzetleri", hastane: "Sağlık & Yaşam Tıp Merkezi", kasap: "Gurme Kasap & Et Galerisi", fırın: "Tarihi Odun Taş Fırını & Simit", eczane: "Şifa & Sağlık Nöbetçi Eczanesi" };
           const highlights = { otel: "Oda Hijyeni & Konforlu Misafir Deneyimi", kafe: "Nitelikli Çekirdek Kahve & Taze Günlük Tatlılar", restoran: "Geleneksel Odun Ateşi Yöresel Kebap", hastane: "Uzman Hekim ve Güler Yüzlü Kadro", kasap: "Taze Zırh Kıyma ve Yerli Besi Eti", fırın: "Odun Ateşinde Sıcak Taş Fırın Somunu", eczane: "Eksiksiz Reçete Temini ve Danışmanlık" };
           const profile = getCategoryProfile(names[cat], city, targetDist);
           baseList.push({ id: `${city}_${targetDist}_${cat}_${idx}`, category: cat, categoryName: profile.catName, name: names[cat], district: targetDist, city: city, rating: +(4.4 + (idx % 4) * 0.1).toFixed(1), reviews: 210 + idx * 140, highlight: highlights[cat], sentiment: { positive: 88 + (idx % 7), neutral: 8, negative: 4 }, summary: profile.summary, tip: profile.tip, likes: profile.likes, complaints: profile.complaints, actions: profile.actions });
@@ -439,33 +554,37 @@
       }
       document.getElementById('bizCountDisplay').innerText = `${list.length} İşletme Listelendi`;
       const grid = document.getElementById('businessesGrid');
-      grid.innerHTML = list.map(b => `
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-sky-400 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-3">
+      grid.innerHTML = list.map(b => {
+        const mapsUrl = getGoogleMapsUrl(b);
+        return `
+        <div onclick="selectBusiness('${b.id}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-sky-400 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-3 cursor-pointer group">
           <div>
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
-                b.category === 'otel' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
-                b.category === 'kafe' ? 'bg-amber-50 text-amber-800 border border-amber-200' :
-                b.category === 'restoran' ? 'bg-orange-50 text-orange-700 border border-orange-200' :
-                b.category === 'hastane' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
-                b.category === 'kasap' ? 'bg-red-50 text-red-700 border border-red-200' :
-                b.category === 'fırın' ? 'bg-yellow-50 text-yellow-800 border border-yellow-200' :
-                b.category === 'eczane' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-sky-50 text-sky-700 border border-sky-200'
-              }">${b.categoryName ? b.categoryName : b.category.toUpperCase()}</span>
+              <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${getCategoryColorClass(b.category)}">${getCategoryBadge(b.category, b.categoryName)}</span>
               <span class="text-xs font-bold text-amber-500 flex items-center"><i class="fa-solid fa-star text-[11px] mr-1"></i>${b.rating}</span>
             </div>
-            <h3 class="font-extrabold text-slate-900 text-base mt-2">${b.name}</h3>
+            <h3 class="font-extrabold text-slate-900 text-base mt-2 group-hover:text-sky-600 transition flex items-center justify-between">
+              <span>${b.name}</span>
+              <a href="${mapsUrl}" target="_blank" onclick="event.stopPropagation();" title="Google Haritalar'da Aç" class="text-xs text-slate-400 hover:text-emerald-600 p-1">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </h3>
             <p class="text-xs text-slate-500 flex items-center mt-1">
               <span class="bg-sky-50 text-sky-700 font-bold px-2 py-0.5 rounded mr-1.5 flex items-center text-[11px]"><i class="fa-solid fa-map-pin mr-1 text-sky-500"></i>${b.district}, ${b.city || currentCity}</span>
               <strong class="text-slate-600 font-semibold">${b.reviews} Yorum</strong>
             </p>
             <div class="mt-2.5 p-2 bg-slate-50 rounded-lg border border-slate-100 text-xs text-sky-800 font-medium"><i class="fa-solid fa-award mr-1 text-sky-600"></i>${b.highlight}</div>
           </div>
-          <button onclick="selectBusiness('${b.id}')" class="w-full mt-2 py-2.5 bg-sky-50 hover:bg-sky-600 hover:text-white text-sky-700 font-bold rounded-xl text-xs transition flex items-center justify-center space-x-1.5 cursor-pointer border border-sky-100">
-            <i class="fa-solid fa-sparkles text-sky-500"></i><span>AI Analiz Raporunu Aç</span>
-          </button>
-        </div>
-      `).join('');
+          <div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-100">
+            <button onclick="event.stopPropagation(); selectBusiness('${b.id}')" class="py-2 px-3 bg-sky-50 hover:bg-sky-600 hover:text-white text-sky-700 font-bold rounded-xl text-xs transition flex items-center justify-center space-x-1.5 cursor-pointer border border-sky-100">
+              <i class="fa-solid fa-sparkles text-sky-500"></i><span>AI Analiz</span>
+            </button>
+            <a href="${mapsUrl}" target="_blank" onclick="event.stopPropagation();" class="py-2 px-3 bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 font-bold rounded-xl text-xs transition flex items-center justify-center space-x-1.5 cursor-pointer border border-emerald-200 shadow-2xs">
+              <i class="fa-solid fa-map-location-dot text-emerald-600"></i><span>Haritada Gör</span>
+            </a>
+          </div>
+        </div>`;
+      }).join('');
       if (list.length > 0) selectBusiness(list[0].id, false);
     }
 
@@ -475,7 +594,7 @@
       if (!biz) { const allBiz = getCityBusinesses(currentCity, currentDistrict); biz = allBiz.find(b => b.id === bizId) || allBiz[0]; }
       if (!biz) return;
       selectedBusinessObj = biz;
-      const catLabel = biz.categoryName ? biz.categoryName : biz.category.toUpperCase();
+      const catLabel = getCategoryBadge(biz.category, biz.categoryName);
       document.getElementById('detailBizName').innerText = biz.name;
       document.getElementById('detailBadgeDistrict').innerText = `${biz.district}, ${biz.city || currentCity}`;
       document.getElementById('detailBizMeta').innerText = `${biz.city || currentCity} / ${biz.district} • ${catLabel} • Google Haritalar Doğrulanmış Müşteri Yorum Analizi`;
@@ -514,13 +633,41 @@
           </div>
         </div>
       `).join('');
+      const mapsUrl = getGoogleMapsUrl(biz);
+      const mapBtn = document.getElementById('detailMapBtn');
+      if (mapBtn) mapBtn.href = mapsUrl;
+      const mapOpenLink = document.getElementById('detailMapOpenLink');
+      if (mapOpenLink) mapOpenLink.href = mapsUrl;
+      const mapSub = document.getElementById('detailMapSub');
+      if (mapSub) mapSub.innerText = `${biz.name} • ${biz.district}, ${biz.city || currentCity}`;
+      const mapIframe = document.getElementById('detailMapIframe');
+      if (mapIframe) mapIframe.src = getGoogleMapsEmbedUrl(biz);
+
       if (shouldScroll) document.getElementById('aiDetailSection').scrollIntoView({ behavior: 'smooth' });
     }
 
     function executeCustomSearch() {
-      const q = document.getElementById('customSearchInput').value.trim();
-      if (!q) { customSearchResults = null; renderDisplay(); return; }
-      const qLower = q.toLowerCase();
+      const rawQ = document.getElementById('customSearchInput').value.trim();
+      if (!rawQ) { customSearchResults = null; renderDisplay(); return; }
+      
+      const parsed = parseSearchQuery(rawQ);
+      if (parsed.isOnlyDistrict) {
+        currentCity = parsed.city;
+        citySelect.value = parsed.city;
+        updateDistrictDatalist();
+        selectDistrict(parsed.district);
+        return;
+      }
+
+      currentCity = parsed.city;
+      citySelect.value = parsed.city;
+      currentDistrict = parsed.district;
+      const distInput = document.getElementById('districtInput');
+      if (distInput) distInput.value = currentDistrict;
+      updateDistrictDatalist();
+      renderDistrictPills();
+
+      const qLower = rawQ.toLowerCase();
       let matches = [];
 
       if (qLower.includes("makarbox") || qLower.includes("makar box") || qLower.includes("makarna efeler")) {
@@ -543,7 +690,8 @@
       });
 
       if (matches.length === 0) {
-        const profile = getCategoryProfile(q, currentCity, currentDistrict);
+        const cleanName = parsed.name || rawQ;
+        const profile = getCategoryProfile(cleanName, currentCity, currentDistrict);
         let dynamicReviews = 420; let dynamicRating = 4.5;
         if (profile.cat === "otel") { dynamicReviews = 1850; dynamicRating = 4.4; }
         else if (profile.cat === "restoran") { dynamicReviews = 1250; dynamicRating = 4.6; }
@@ -554,7 +702,7 @@
 
         matches = [{
           id: "custom_search_1", category: profile.cat, categoryName: profile.catName,
-          name: q.charAt(0).toUpperCase() + q.slice(1), district: currentDistrict || "Merkez", city: currentCity,
+          name: cleanName, district: currentDistrict || "Merkez", city: currentCity,
           rating: dynamicRating, reviews: dynamicReviews, highlight: profile.highlight, sentiment: { positive: 91, neutral: 6, negative: 3 },
           summary: profile.summary, tip: profile.tip, likes: profile.likes, complaints: profile.complaints, actions: profile.actions
         }];
